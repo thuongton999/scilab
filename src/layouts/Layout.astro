@@ -1,0 +1,41 @@
+---
+import "../styles/reset.css";
+
+export interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;400&display=swap');
+	:root {
+		--color-background: #181823;
+		--color-primary: #537FE7;
+		--color-secondary: #C0EEF2;
+		--color-text: #E9F8F9;
+	}
+	body {
+		display: flex;
+		justify-content: center;
+		font-family: 'Kanit', sans-serif;
+		overflow: hidden;
+		background-color: var(--color-background);
+		color: var(--color-text);
+	}
+</style>

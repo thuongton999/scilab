@@ -6,7 +6,7 @@
     <div class="right">
         <a href="/page1">Page1</a>
         <a href="/page2">Page2</a>
-        <a class="highlight" href="/page3">Page3</a>
+        <a href="/page3">Page3</a>
     </div>
 </header>
 
@@ -16,6 +16,24 @@
         left: 0; right: 0;
         display: flex;
         justify-content: space-between;
+        align-items: stretch;
+        padding: 1rem 2rem;
+        order: 2;        
+    }
+    .left {
+        flex: 3;
+    }
+    .right {
+        flex: 2;
+        display: flex;
+        justify-content: flex-end;
         align-items: center;
+        gap: 1em;
+    }
+    .right > *:last-child {
+        padding: 0.2em 1em;
+        border-radius: 1em;
+        background-color: var(--color-text);
+        color: var(--color-background);
     }
 </style>

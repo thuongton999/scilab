@@ -29,13 +29,16 @@ const { title } = Astro.props;
 		--color-primary: #537FE7;
 		--color-secondary: #C0EEF2;
 		--color-text: #E9F8F9;
+		--color-overlay: rgba(255, 255, 255, 0.1);
+		--padding-lr: 4rem;
 	}
 	body {
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
 		font-family: 'Kanit', sans-serif;
-		overflow: hidden;
+		overflow-x: hidden;
 		background-color: var(--color-background);
 		color: var(--color-text);
+		box-sizing: border-box;
 	}
 </style>

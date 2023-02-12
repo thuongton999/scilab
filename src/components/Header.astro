@@ -1,39 +1,39 @@
----
-
----
 <header>
     <a class="left" href="/">SCIENCE Lab</a>
     <div class="right">
         <a href="/page1">Page1</a>
         <a href="/page2">Page2</a>
-        <a href="/page3">Page3</a>
+        <a href="/join">Join now</a>
     </div>
 </header>
 
 <style>
     header {
-        position: fixed;
-        left: 0; right: 0;
+        position: sticky;
+        top: 0;
         display: flex;
         justify-content: space-between;
         align-items: stretch;
-        padding: 1rem 2rem;
-        order: 2;        
+        padding: 1rem var(--padding-lr);
+        background-image: linear-gradient(var(--color-background), transparent);
+        text-shadow: 0 0 5px var(--color-background);
+        z-index: 99999;
+        margin-bottom: 3rem;
     }
     .left {
-        flex: 3;
+        font-size: 1.5rem;
     }
     .right {
-        flex: 2;
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        gap: 1em;
+        gap: 5rem;
     }
     .right > *:last-child {
         padding: 0.2em 1em;
         border-radius: 1em;
         background-color: var(--color-text);
         color: var(--color-background);
+        text-shadow: none;
     }
 </style>

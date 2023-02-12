@@ -2,13 +2,128 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 ---
-
 <Layout title="SciLab">
-	<Header/>
+	<Header />
 	<main>
-		
+		<article class="hero">
+			<h1 class="italic">Tempor dolore ipsum</h1>
+			<h1>Reprehenderit consectetur pariatur deserunt</h1>
+			<p>Sunt adipisicing Lorem nulla nostrud reprehenderit laboris elit ex mollit et voluptate Lorem labore amet.</p>
+			<div class="hero__references">
+				<a href="/blog">View our posts ↗</a>
+				<a href="/research">Research</a>
+			</div>
+		</article>
+		<article class="services">
+			<div class="services__header">
+				<h1>Our Services</h1>
+				<div class="services__show">
+					<button id="previous__service">←</button>
+					<button id="next__service">→</button>
+				</div>
+			</div>
+			<section>
+
+			</section>
+		</article>
 	</main>
 </Layout>
-
+<script>
+	let services_show_controller = {
+		prev: document.getElementById("previous__service"),
+		next: document.getElementById("next__service")
+	}
+	services_show_controller.prev.addEventListener("onclick", lastService);
+	services_show_controller.next.addEventListener("onclick", nextService);
+	let counter = 0;
+	function nextService() {
+		counter++;
+	}
+	function lastService() {
+		counter--;
+	}
+</script>
 <style>
+	main {
+		width: 100%;
+	}
+	article {
+		position: relative;
+		padding: 0 var(--padding-lr);
+		margin-bottom: 5rem;
+	}
+	.hero {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-right: 50%;
+		text-shadow: 0 0 5px var(--color-background);
+	}
+	.hero::before, .hero::after {
+		content: "";
+		position: absolute;
+		inset: -2.5rem -5% -2.5rem 40%;
+	}
+	.hero::after {
+		z-index: -2;
+		border-radius: 5rem 0 0 5rem;
+		background-image: url(https://picsum.photos/1920/1080);
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+	}
+	.hero::before {
+		z-index: -1;
+		transform: scale(110%);
+		box-shadow: inset 0 0 3rem 6rem var(--color-background);
+	}
+	.hero > p {
+		padding-right: 30%;
+		margin-bottom: 3rem;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: bold;
+		line-height: 100%;
+		margin-bottom: 1rem;
+	}
+	p {
+		font-weight: 300;
+		font-size: 1.2rem;
+	}
+	.italic {
+		font-style: italic;
+		font-weight: 100;
+	}
+	.hero__references {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	.hero__references > a {
+		padding: 1rem 2rem;
+		border: 2px solid var(--color-secondary);
+		border-radius: 3rem;
+	}
+	.hero__references > a:first-child {
+		background-color: var(--color-secondary);
+		text-shadow: none;
+		color: var(--color-background);
+	}
+	.services__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.services__show > button {
+		font-size: 4rem;
+		line-height: 4rem;
+		margin-left: 1rem;
+	}
+	.services__show > button:last-child {
+		line-height: 3rem;
+		padding: 0.2rem 2rem 0.7rem 2rem;
+		border-radius: 3rem;
+		background-color: var(--color-overlay);
+	}
 </style>

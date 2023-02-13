@@ -6,8 +6,10 @@ import Header from '../components/Header.astro';
 	<Header />
 	<main>
 		<article class="hero">
-			<h1 class="italic">Tempor dolore ipsum</h1>
-			<h1>Reprehenderit consectetur pariatur deserunt</h1>
+			<h1>
+				<i>Tempor dolore ipsum</i>
+				<b>Reprehenderit consectetur pariatur deserunt</b>
+			</h1>
 			<p>Sunt adipisicing Lorem nulla nostrud reprehenderit laboris elit ex mollit et voluptate Lorem labore amet.</p>
 			<div class="hero__references">
 				<a href="/blog">View our posts ↗</a>
@@ -15,15 +17,59 @@ import Header from '../components/Header.astro';
 			</div>
 		</article>
 		<article class="services">
-			<div class="services__header">
-				<h1>Our Services</h1>
-				<div class="services__show">
+			<h1 class="services__header">
+				Our Service
+				<div>
 					<button id="previous__service">←</button>
 					<button id="next__service">→</button>
 				</div>
-			</div>
-			<section>
-
+			</h1>
+			<section class="services__content">
+				<p>
+					<b>STEM</b>
+					Non veniam voluptate eiusmod non incididunt irure ex. 
+					Aliqua quis culpa in irure Lorem. 
+					Eiusmod amet laboris eiusmod mollit enim duis incididunt mollit. 
+					In consequat amet excepteur consequat ullamco amet irure ad proident et qui occaecat minim. 
+					Est anim cillum ullamco qui aliqua voluptate dolore. 
+					Duis id consequat non aliqua eiusmod dolore voluptate dolor. 
+					Ea officia commodo consectetur sunt commodo ea proident esse.
+					Labore sint quis deserunt laborum cillum elit exercitation deserunt sit. 
+					Laboris incididunt laboris ipsum ad eu do aliqua aute ipsum ex. 
+					Nisi culpa aliquip minim commodo velit excepteur ullamco quis. 
+					Veniam irure id id duis sit consequat laboris minim laborum sit. 
+					Tempor exercitation dolor duis velit ullamco elit ea est eiusmod incididunt sunt officia.
+				</p>
+				<p>
+					<b>STEM</b>
+					Non veniam voluptate eiusmod non incididunt irure ex. 
+					Aliqua quis culpa in irure Lorem. 
+					Eiusmod amet laboris eiusmod mollit enim duis incididunt mollit. 
+					In consequat amet excepteur consequat ullamco amet irure ad proident et qui occaecat minim. 
+					Est anim cillum ullamco qui aliqua voluptate dolore. 
+					Duis id consequat non aliqua eiusmod dolore voluptate dolor. 
+					Ea officia commodo consectetur sunt commodo ea proident esse.
+					Labore sint quis deserunt laborum cillum elit exercitation deserunt sit. 
+					Laboris incididunt laboris ipsum ad eu do aliqua aute ipsum ex. 
+					Nisi culpa aliquip minim commodo velit excepteur ullamco quis. 
+					Veniam irure id id duis sit consequat laboris minim laborum sit. 
+					Tempor exercitation dolor duis velit ullamco elit ea est eiusmod incididunt sunt officia.
+				</p>
+				<p>
+					<b>STEM</b>
+					Non veniam voluptate eiusmod non incididunt irure ex. 
+					Aliqua quis culpa in irure Lorem. 
+					Eiusmod amet laboris eiusmod mollit enim duis incididunt mollit. 
+					In consequat amet excepteur consequat ullamco amet irure ad proident et qui occaecat minim. 
+					Est anim cillum ullamco qui aliqua voluptate dolore. 
+					Duis id consequat non aliqua eiusmod dolore voluptate dolor. 
+					Ea officia commodo consectetur sunt commodo ea proident esse.
+					Labore sint quis deserunt laborum cillum elit exercitation deserunt sit. 
+					Laboris incididunt laboris ipsum ad eu do aliqua aute ipsum ex. 
+					Nisi culpa aliquip minim commodo velit excepteur ullamco quis. 
+					Veniam irure id id duis sit consequat laboris minim laborum sit. 
+					Tempor exercitation dolor duis velit ullamco elit ea est eiusmod incididunt sunt officia.
+				</p>
 			</section>
 		</article>
 	</main>
@@ -43,6 +89,7 @@ import Header from '../components/Header.astro';
 		counter--;
 	}
 </script>
+
 <style>
 	main {
 		width: 100%;
@@ -50,23 +97,23 @@ import Header from '../components/Header.astro';
 	article {
 		position: relative;
 		padding: 0 var(--padding-lr);
-		margin-bottom: 5rem;
+		margin-bottom: var(--margin-bt-large);
 	}
 	.hero {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		padding-right: 50%;
-		text-shadow: 0 0 5px var(--color-background);
+		text-shadow: var(--shadow-txt) var(--color-background);
 	}
 	.hero::before, .hero::after {
 		content: "";
 		position: absolute;
-		inset: -2.5rem -5% -2.5rem 40%;
+		inset: calc(var(--radius-large) / -2) -5% calc(var(--radius-large) / -2) 40%;
 	}
 	.hero::after {
 		z-index: -2;
-		border-radius: 5rem 0 0 5rem;
+		border-radius: var(--radius-large) 0 0 var(--radius-large);
 		background-image: url(https://picsum.photos/1920/1080);
 		background-repeat: no-repeat;
 		background-position: center;
@@ -79,21 +126,7 @@ import Header from '../components/Header.astro';
 	}
 	.hero > p {
 		padding-right: 30%;
-		margin-bottom: 3rem;
-	}
-	h1 {
-		font-size: 4rem;
-		font-weight: bold;
-		line-height: 100%;
-		margin-bottom: 1rem;
-	}
-	p {
-		font-weight: 300;
-		font-size: 1.2rem;
-	}
-	.italic {
-		font-style: italic;
-		font-weight: 100;
+		margin-bottom: var(--margin-bt-normal);
 	}
 	.hero__references {
 		display: flex;
@@ -115,15 +148,52 @@ import Header from '../components/Header.astro';
 		justify-content: space-between;
 		align-items: center;
 	}
-	.services__show > button {
+	#previous__service, #next__service {
 		font-size: 4rem;
 		line-height: 4rem;
 		margin-left: 1rem;
+		cursor: pointer;
 	}
-	.services__show > button:last-child {
+	#next__service {
 		line-height: 3rem;
 		padding: 0.2rem 2rem 0.7rem 2rem;
 		border-radius: 3rem;
 		background-color: var(--color-overlay);
+	}
+	.services__content {
+		margin: var(--margin-bt-normal) 0 var(--margin-bt-large) 0;
+		position: relative;
+		display: flex;
+		overflow: hidden;
+		width: 100%;
+		--content-gap: 2rem;
+		gap: var(--content-gap);
+		padding: 2rem 0 2rem 2rem;
+		--border-width: 3px;
+	}
+	.services__content::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border: var(--border-width) solid transparent;
+        background:
+            linear-gradient(var(--color-secondary), transparent 50%),
+            border-box;
+        background-size: calc(100% + var(--border-width) * 2) calc(100% + var(--border-width) * 2);
+        background-position: center;
+        -webkit-mask:
+            linear-gradient(#fff 0 0) padding-box, 
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        border-radius: var(--radius-normal);
+        mask-composite: exclude;
+	}
+	.services__content > * {
+		flex: 1 0 calc(50% - var(--content-gap));
+	}
+	.services__content > p {
+		display: flex;
+		flex-direction: column;
+		text-align: justify;
 	}
 </style>

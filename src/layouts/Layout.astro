@@ -31,6 +31,11 @@ const { title } = Astro.props;
 		--color-text: #E9F8F9;
 		--color-overlay: rgba(255, 255, 255, 0.1);
 		--padding-lr: 4rem;
+		--margin-bt-large: 5rem;
+		--margin-bt-normal: 3rem;
+		--shadow-txt: 0 0 5px;
+		--radius-large: 5rem;
+		--radius-normal: 3rem;
 	}
 	body {
 		display: flex;
@@ -40,5 +45,21 @@ const { title } = Astro.props;
 		background-color: var(--color-background);
 		color: var(--color-text);
 		box-sizing: border-box;
+	}
+	h1 {
+		font-size: 4rem;
+		margin-bottom: 1rem;
+		line-height: 100%;
+	}
+	p {
+		font-weight: 300;
+		font-size: 1.2rem;
+	}
+	i {
+		font-style: italic;
+		font-weight: 100;
+	}
+	b {
+		font-weight: bold;
 	}
 </style>

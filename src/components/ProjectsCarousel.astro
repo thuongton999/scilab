@@ -1,13 +1,115 @@
 ---
-const { class: className } = Astro.props; 
+const { class: className } = Astro.props;
+
+const carousel_imgs = [
+    {
+        src: "https://picsum.photos/500/300",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/1080/720",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/200/200",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/400/300",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/350/350",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/200/200",
+        alt: "A picsum image",
+    },
+];
+const displayPerRow = 3;
+const imgGroups = carousel_imgs.reduce((group, item, index) => {
+    const groupIndex = Math.floor(index / displayPerRow);
+    if (!group[groupIndex]) group[groupIndex] = []; // create a new group
+    group[groupIndex].push(item);
+    return group;
+}, []);
 ---
 
-<section class={className}>
-Aute ut voluptate nisi esse. Elit nostrud proident enim in. Ea duis culpa ut non velit amet aute. Adipisicing commodo pariatur ut culpa enim non commodo mollit culpa ea.
-
-Nisi dolore eu sint pariatur et amet. Ex reprehenderit est enim consequat officia quis anim eiusmod sint ipsum. Laborum id laborum veniam eu.
+<section class={`${className} carousel`} id="ps_carousel">
+    {imgGroups.map((group, glb_idx) => (
+        <div class="carousel__group" data-show={!glb_idx}>
+            {group.map((img: { src: string; alt: string }, item_idx: number) => {
+                const index = glb_idx * displayPerRow + item_idx + 1;
+                // for styling img
+                if (index % 2 === 0) {
+                    if (index % 4 === 0) return (<img class="carousel__img4n" src={img.src} alt={img.alt}/>);
+                    return (<img class="carousel__img2n" src={img.src} alt={img.alt} />);
+                }
+                if (index % 3 === 0) return (<img class="carousel__img3n" src={img.src} alt={img.alt}/>);
+                return (<img class="carousel__img1n" src={img.src} alt={img.alt}/>);
+            })}
+        </div>
+    ))}
+    <button type="button" id="ps_next_img">→</button>
 </section>
 
-<style>
+<script>
+    const carousel = document.getElementById("ps_carousel");
+    
+</script>
 
+<style>
+    section {
+        position: relative;
+    }
+    #ps_next_img {
+        position: absolute;
+        top: 50%;
+        right: 0%;
+        transform: translate(50%, -50%);
+        background-color: var(--color-overlay);
+        backdrop-filter: blur(5px);
+        font-size: var(--radius-normal);
+        line-height: 70%;
+        padding: 0 0.5em 0.15em 0.5em;
+        border-radius: var(--radius-normal);
+        overflow: hidden;
+        cursor: pointer;
+    }
+    .carousel {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    .carousel__group {
+        display: flex;
+        visibility: hidden;
+    }
+    .carousel__group[data-show] {
+        flex: 1 0 100%;
+        visibility: visible;
+        gap: 1rem;
+    }
+    .carousel__group > img {
+        --ps-img-s: calc(var(--radius-normal) * 4);
+        flex-grow: 1;
+        flex-shrink: 0;
+        height: var(--ps-img-s);
+        min-width: var(--ps-img-s);
+        max-width: calc(var(--ps-img-s) * 5);
+        border-radius: var(--ps-img-s);
+    }
+    img.carousel__img1n {
+        flex-basis: 30%;
+    }
+    img.carousel__img2n {
+        flex-basis: 50%;
+    }
+    img.carousel__img3n {
+        flex-basis: 15%;
+    }
+    img.carousel__img4n {
+        flex-basis: 15%;
+    }
 </style>

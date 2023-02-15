@@ -29,8 +29,8 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
             <h1 class="services__header">
                 Our Service
                 <div>
-                    <button id="previous__service">←</button>
-                    <button id="next__service">→</button>
+                    <button type="button" id="previous__service">←</button>
+                    <button type="button" id="next__service">→</button>
                 </div>
             </h1>
             <ServiceReferences class="services__references" client:visible />
@@ -42,8 +42,30 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
                 eu non. Dolor pariatur velit anim aute nisi dolor qui. Eu
                 laboris sit culpa est nulla consectetur aliquip consectetur non.
             </h2>
-			<a href="/services" use-arrow>Discover our missions</a>
-			<ProjectsCarousel class="services__carousel"/>
+            <a href="/services" use-arrow>Discover our missions</a>
+            <ProjectsCarousel />
+            <section class="services__info">
+                <h2 class="services__info__header">Our Lab</h2>
+                <div class="services__info__reference">
+                    <a href="/lab">See all</a>
+                </div>
+                <p class="services__info__description">
+                    Voluptate voluptate commodo adipisicing nostrud consectetur
+                    pariatur culpa aute adipisicing. Anim fugiat tempor eiusmod
+                    sunt ipsum cupidatat enim occaecat non officia anim
+                    excepteur sunt. Consequat ullamco labore aliquip fugiat
+                    cupidatat deserunt do eu. Esse deserunt sunt incididunt ea
+                    et do laborum officia qui sit est nostrud. Fugiat velit
+                    incididunt in cillum mollit ut laborum nulla officia magna
+                    nostrud et et. Velit in eiusmod ipsum qui. Velit elit qui
+                    est quis anim anim non laboris consequat nostrud culpa.
+                    Incididunt fugiat nulla commodo Lorem elit ex ullamco elit.
+                    Eiusmod eu excepteur ea dolore consequat irure consectetur.
+                </p>
+                <span class="services__info__experience">
+                    <b>20+</b> Days of experience 😏
+                </span>
+            </section>
         </article>
     </main>
 </Layout>
@@ -66,6 +88,7 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
 <style>
     main {
         width: 100%;
+        overflow: hidden;
     }
     article {
         position: relative;
@@ -76,14 +99,15 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-right: 50%;
+        padding: 2rem 50% 0 var(--padding-lr);
         text-shadow: var(--shadow-txt) var(--color-background);
     }
     .hero::before,
     .hero::after {
         content: "";
         position: absolute;
-        inset: calc(var(--radius-large) / -2) -5% calc(var(--radius-large) / -2) 40%;
+        inset: calc(var(--radius-large) / -2) -5% calc(var(--radius-large) / -2)
+            30%;
         z-index: -1;
     }
     .hero::before {
@@ -92,11 +116,14 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-		background-color: var(--color-text);
+        background-color: var(--color-text);
     }
     .hero::after {
-        transform: scale(110%);
-        box-shadow: inset 0 0 3rem 6rem var(--color-background);
+        transform: scale(105%);
+        box-shadow: inset 0 0 3.5rem 8rem var(--color-background);
+    }
+    .hero > h1 {
+        margin-bottom: calc(var(--margin-bt-normal) / 2);
     }
     .hero > p {
         padding-right: 30%;
@@ -122,6 +149,16 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
         justify-content: space-between;
         align-items: center;
     }
+    .services {
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        gap: 2rem;
+    }
+    .services > * {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
     #previous__service,
     #next__service {
         font-size: 4rem;
@@ -138,7 +175,6 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
     .services__references {
         --content-gap: 2rem;
         --border-width: 3px;
-        margin: var(--margin-bt-normal) 0 var(--margin-bt-normal) 0;
         position: relative;
         display: flex;
         overflow: hidden;
@@ -168,39 +204,73 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
         border-radius: var(--radius-normal);
         mask-composite: exclude;
     }
-    .services__references::after {
-        background-image: linear-gradient(
-            to top,
-            var(--color-background),
-            transparent 50%
-        );
-    }
     .services__image {
-		position: relative;
-        overflow: hidden;
+        position: relative;
     }
     .services__image > img {
-		width: 100%;
+        width: 100%;
         aspect-ratio: 16 / 9;
         border-radius: var(--radius-large);
-		object-fit: cover;
-        object-position: center;
     }
     .services__image::after {
         content: "";
         position: absolute;
         inset: 0;
         transform: scale(105%);
-        box-shadow: inset 0 0 3rem 6rem var(--color-background);
+        box-shadow: inset 0 0 3rem 6rem var(--color-background),
+            0 0 3rem 3rem var(--color-background);
     }
     .services > h2 {
-		padding: 1rem calc(var(--padding-lr) * 2);
+        padding: 0 calc(var(--padding-lr) * 2);
         text-align: center;
     }
-	.services > a {
-		padding: var(--padding-bt);
-		color: var(--color-background);
-		background-color: var(--color-text);
-		border-radius: var(--radius-large);
-	}
+    .services > a {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: fit-content;
+        padding: var(--padding-bt);
+        color: var(--color-background);
+        background-color: var(--color-text);
+        border-radius: var(--radius-large);
+    }
+    .services__info {
+        margin: 2rem 0;
+        display: grid;
+        gap: 1rem;
+        grid-template-areas: 
+            'h d d'
+            'r d d'
+            'r s s';
+        grid-template-columns: 40% 30% 30%;
+        font-size: 1.25rem;
+    }
+    .services__info__header {
+        grid-area: h;
+    }
+    .services__info__description {
+        grid-area: d;
+        text-align: justify;
+    }
+    .services__info__reference {
+        grid-area: r;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+    .services__info__reference > a {
+        font-size: 3em;
+        color: var(--color-background);
+        background-color: var(--color-text);
+        padding: 2rem 3rem;
+        border-radius: 3em;
+        text-transform: uppercase;
+    }
+    .services__info__experience {
+        grid-area: s;
+        display: flex;
+        justify-content: space-between;
+        font-size: 2em;
+        font-weight: 300;
+    }
 </style>

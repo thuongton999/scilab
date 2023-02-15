@@ -1,0 +1,43 @@
+---
+const { class: className } = Astro.props;
+
+const references = [
+    {
+        title: "STEM",
+        preview: "Anim minim qui nostrud aliqua. Proident nostrud amet aliqua qui. Sint officia id duis deserunt labore ut esse voluptate consequat ipsum consequat ipsum aute esse. Ad enim sunt labore est culpa ut ut minim quis ea ad duis cillum. Deserunt pariatur nulla esse sit incididunt exercitation et. Est commodo consequat cillum id qui mollit Lorem sunt aute ullamco. Ea sint culpa ullamco in sunt ipsum exercitation sunt dolor consequat sit do minim. Irure laborum irure irure minim fugiat non labore."
+    },
+    {
+        title: "Non anim irure ad esse est officia nisi magna ipsum ullamco et. Non anim irure ad esse est officia nisi magna ipsum ullamco et.",
+        preview: "Anim minim qui nostrud aliqua. Proident nostrud amet aliqua qui. Sint officia id duis deserunt labore ut esse voluptate consequat ipsum consequat ipsum aute esse. Ad enim sunt labore est culpa ut ut minim quis ea ad duis cillum. Deserunt pariatur nulla esse sit incididunt exercitation et. Est commodo consequat cillum id qui mollit Lorem sunt aute ullamco. Ea sint culpa ullamco in sunt ipsum exercitation sunt dolor consequat sit do minim. Irure laborum irure irure minim fugiat non labore."
+    },
+    {
+        title: "STEM",
+        preview: "Anim minim qui nostrud aliqua. Proident nostrud amet aliqua qui. Sint officia id duis deserunt labore ut esse voluptate consequat ipsum consequat ipsum aute esse. Ad enim sunt labore est culpa ut ut minim quis ea ad duis cillum. Deserunt pariatur nulla esse sit incididunt exercitation et. Est commodo consequat cillum id qui mollit Lorem sunt aute ullamco. Ea sint culpa ullamco in sunt ipsum exercitation sunt dolor consequat sit do minim. Irure laborum irure irure minim fugiat non labore."
+    }
+];
+---
+<section class={className}> 
+    {references.map(reference => (
+        <p>
+            <b>{reference.title}</b>
+            <br/>
+            {reference.preview}
+        </p>
+    ))}
+</section>
+
+<style>
+    p {
+        --line-height: 1.5rem;
+		--line-clamp: 6;
+		display: block;
+		text-align: justify;
+		line-height: var(--line-height);
+		max-height: calc(var(--line-clamp) * var(--line-height));
+        text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	p > b {
+		white-space: nowrap;
+	}
+</style>

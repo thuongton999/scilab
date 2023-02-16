@@ -1,0 +1,11 @@
+---
+const { class: className, imgs } = Astro.props;
+---
+
+<section class={className}>
+    {imgs.map((img: { src: string; alt: string }) => (
+        <div>
+            <img src={img.src} alt={img.alt} />
+        </div>
+    ))}
+</section>

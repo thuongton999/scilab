@@ -1,0 +1,98 @@
+---
+const {class: className} = Astro.props;
+const contacts = [
+    {
+        url: "https://facebook.com",
+        alt: "Facebook"
+    },
+    {
+        url: "https://instagram.com",
+        alt: "Instagram"
+    }
+];
+---
+<script>
+    import QRCode from 'qrcode-svg';
+    const refs = document.getElementsByClassName("reference");
+    const qrcodeViewer = document.getElementById("qrcode__viewer");
+    var style = getComputedStyle(document.body);
+    let cached_qrcode = {};
+    const generateQR = (ref) => {
+        if (!(refs[0] instanceof HTMLElement)) return;
+        const url = ref.dataset.url;
+        const key = ref.dataset.key;
+        if (key in cached_qrcode) {
+            qrcodeViewer.innerHTML = cached_qrcode[key];
+            return;
+        }
+        var qrGenerator = new QRCode({
+            content: url,
+            padding: 0,
+            width: 256,
+            height: 256,
+            color: style.getPropertyValue('--color-background'),
+            background: style.getPropertyValue('--color-text'),
+            ecl: "H",
+            join: true,
+            container: "svg-viewbox"
+        });
+        const qrCodeSvg = qrGenerator.svg();
+        qrcodeViewer.innerHTML = qrCodeSvg;
+        cached_qrcode[key] = qrCodeSvg;
+    }
+    generateQR(refs[0]);
+    for (let ref of refs) {
+        ref.addEventListener("click", () => generateQR(ref));
+    }
+</script>
+<section class={className}>
+    <h1 class="header">Contact</h1>
+    <ul class="contact_refs">
+        {contacts.map((contact, idx) => (
+            <li class="reference" 
+                data-url={contact.url}
+                data-key={idx}>
+                {contact.alt}
+            </li>
+        ))}
+    </ul>
+    <div class="qrcode">
+        <span>Scan me</span>
+        <div id="qrcode__viewer">
+        </div>
+    </div>
+</section>
+
+<style>
+    section {
+        display: grid;
+        grid-template-areas:
+            "h qr"
+            "r qr";
+    }
+    .header {
+        grid-area: h;
+    }
+    .contact_refs {
+        grid-area: r;
+        cursor: pointer;
+        font-size: 2em;
+    }
+    .qrcode {
+        grid-area: qr;
+        display: flex;
+        width: fit-content;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem var(--padding-lr);
+        background-color: var(--color-text);
+        color: var(--color-background);
+        border-radius: var(--radius-normal);
+        text-align: center;
+        font-size: 2em;
+    }
+    #qrcode__viewer {
+        width: 100%;
+        aspect-ratio: 1;
+    }
+</style>

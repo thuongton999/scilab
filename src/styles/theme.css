@@ -1,0 +1,7 @@
+:root {
+    --color-background: #181823;
+    --color-primary: #537FE7;
+    --color-secondary: #C0EEF2;
+    --color-text: #E9F8F9;
+    --color-overlay: rgba(255, 255, 255, 0.2);
+}

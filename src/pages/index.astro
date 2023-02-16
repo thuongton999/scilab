@@ -3,9 +3,38 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ServiceReferences from "../components/ServiceReferences.astro";
 import ProjectsCarousel from "../components/ProjectsCarousel.astro";
+import ImageCarousel from "../components/ImageCarousel.astro";
+import Contact from "../components/Contact.astro";
 
 const hero_img = "https://picsum.photos/1920/1080";
 const service_img = "https://picsum.photos/1920/1080?grayscale";
+
+const roadmap_imgs = [
+    {
+        src: "https://picsum.photos/500/300",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/1080/720",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/200/200",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/400/300",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/350/350",
+        alt: "A picsum image",
+    },
+    {
+        src: "https://picsum.photos/200/200",
+        alt: "A picsum image",
+    },
+];
 ---
 
 <Layout title="SciLab">
@@ -33,7 +62,7 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
                     <button type="button" id="next__service">→</button>
                 </div>
             </h1>
-            <ServiceReferences class="services__references" client:visible />
+            <ServiceReferences class="services__references"/>
             <div class="services__image">
                 <img src={service_img} alt="service" />
             </div>
@@ -66,6 +95,18 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
                     <b>20+</b> Days of experience 😏
                 </span>
             </section>
+        </article>
+        <article class="roadmap">
+            <h1>Roadmap</h1>
+            <p>
+                Occaecat amet ullamco laborum consectetur sit elit irure
+                incididunt sint nulla. Fugiat voluptate fugiat sint anim tempor
+                ut. Occaecat excepteur consequat veniam ad quis in.
+            </p>
+            <ImageCarousel class="roadmap__carousel" imgs={roadmap_imgs}/>
+        </article>
+        <article>
+            <Contact />
         </article>
     </main>
 </Layout>
@@ -238,10 +279,10 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
         margin: 2rem 0;
         display: grid;
         gap: 1rem;
-        grid-template-areas: 
-            'h d d'
-            'r d d'
-            'r s s';
+        grid-template-areas:
+            "h d d"
+            "r d d"
+            "r s s";
         grid-template-columns: 40% 30% 30%;
         font-size: 1.25rem;
     }
@@ -272,5 +313,52 @@ const service_img = "https://picsum.photos/1920/1080?grayscale";
         justify-content: space-between;
         font-size: 2em;
         font-weight: 300;
+    }
+    .roadmap {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .roadmap > *:not(.roadmap__carousel) {
+        padding: 0 var(--padding-lr);
+    }
+    .roadmap > p {
+        font-size: 1.5em;
+    }
+    .roadmap__carousel {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        counter-reset: roadmap_img;
+        padding-top: 10%;
+        transform: rotate(5deg) scale(105%);
+    }
+    .roadmap__carousel :global(img) {
+        width: 100%;
+        height: 100%;
+    }
+    .roadmap__carousel > :global(*) {
+        flex-shrink: 0;
+        position: relative;
+        --idx_rm_height: calc(var(--radius-large) * 3.5);
+        height: var(--idx_rm_height);
+        aspect-ratio: 1.5;
+        border-radius: var(--idx_rm_height);
+        overflow: hidden;
+        margin-right: 1rem;
+    }
+    .roadmap__carousel > :global(*)::after {
+        counter-increment: roadmap_img;
+        content: "PH" counter(roadmap_img);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: var(--color-overlay);
+        backdrop-filter: blur(5px);
+        padding: 1em 3em;
+        border-radius: var(--radius-normal);
+        overflow: hidden;
     }
 </style>

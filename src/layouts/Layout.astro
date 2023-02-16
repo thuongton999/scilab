@@ -1,5 +1,6 @@
 ---
 import "../styles/reset.css";
+import "../styles/theme.css";
 
 export interface Props {
 	title: string;
@@ -25,11 +26,6 @@ const { title } = Astro.props;
 <style is:global>
 	@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;400&display=swap');
 	:root {
-		--color-background: #181823;
-		--color-primary: #537FE7;
-		--color-secondary: #C0EEF2;
-		--color-text: #E9F8F9;
-		--color-overlay: rgba(255, 255, 255, 0.2);
 		--padding-lr: 4rem;
 		--padding-ar: 0.2rem 1rem;
 		--padding-bt: 1rem 2rem;
@@ -61,6 +57,7 @@ const { title } = Astro.props;
 	}
 	h1 {
 		font-size: 4em;
+        font-weight: bold;
 	}
 	h2 {
 		font-size: 2em;

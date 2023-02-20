@@ -2,12 +2,16 @@
 const {class: className} = Astro.props;
 const contacts = [
     {
-        url: "https://facebook.com",
+        url: "https://www.facebook.com/sciencelab.project2022/",
         alt: "Facebook"
     },
     {
         url: "https://instagram.com",
         alt: "Instagram"
+    }, 
+    {
+        url: "mailto:sciencelab.workspace@gmail.com",
+        alt: "Email"
     }
 ];
 ---
@@ -15,12 +19,18 @@ const contacts = [
     import QRCode from 'qrcode-svg';
     const refs = document.getElementsByClassName("reference");
     const qrcodeViewer = document.getElementById("qrcode__viewer");
+    const qrcodeUrl = document.getElementById("qrcode__url");
     var style = getComputedStyle(document.body);
     let cached_qrcode = {};
+    let lastRef = refs[0];
     const generateQR = (ref) => {
-        if (!(refs[0] instanceof HTMLElement)) return;
+        if (!(ref instanceof HTMLElement)) return;
         const url = ref.dataset.url;
         const key = ref.dataset.key;
+        qrcodeUrl.setAttribute("href", url);
+        lastRef.removeAttribute("data-active");
+        lastRef = ref;
+        ref.dataset.active = "";
         if (key in cached_qrcode) {
             qrcodeViewer.innerHTML = cached_qrcode[key];
             return;
@@ -31,7 +41,7 @@ const contacts = [
             width: 256,
             height: 256,
             color: style.getPropertyValue('--color-background'),
-            background: style.getPropertyValue('--color-text'),
+            background: "transparent",
             ecl: "H",
             join: true,
             container: "svg-viewbox"
@@ -40,26 +50,28 @@ const contacts = [
         qrcodeViewer.innerHTML = qrCodeSvg;
         cached_qrcode[key] = qrCodeSvg;
     }
-    generateQR(refs[0]);
     for (let ref of refs) {
-        ref.addEventListener("click", () => generateQR(ref));
+        ref.addEventListener("click", async () => generateQR(ref));
     }
+    document.addEventListener("DOMContentLoaded", () => generateQR(lastRef))
 </script>
 <section class={className}>
     <h1 class="header">Contact</h1>
     <ul class="contact_refs">
         {contacts.map((contact, idx) => (
-            <li class="reference" 
+            <h2 class="reference" 
                 data-url={contact.url}
-                data-key={idx}>
+                data-key={idx}
+                data-active={!(idx)}>
                 {contact.alt}
-            </li>
+            </h2>
         ))}
     </ul>
-    <div class="qrcode">
+    <div class="qrcode" lazy-animation lazy-once>
         <span>Scan me</span>
         <div id="qrcode__viewer">
         </div>
+        <a id="qrcode__url" href="/">Or - click here</a>
     </div>
 </section>
 
@@ -69,6 +81,9 @@ const contacts = [
         grid-template-areas:
             "h qr"
             "r qr";
+        grid-template-columns: 1fr 30%;
+        grid-template-rows: 1fr 70%;
+        column-gap: 2rem;
     }
     .header {
         grid-area: h;
@@ -76,23 +91,63 @@ const contacts = [
     .contact_refs {
         grid-area: r;
         cursor: pointer;
-        font-size: 2em;
+        height: fit-content;
+        width: 100%;
+    }
+    .contact_refs > * {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        color: var(--color-fade);
+        transition: all 0.2s ease-in-out;
+    }
+    .contact_refs > *::after {
+        flex: 0;
+        content: "";
+        height: 3px;
+        border-radius: 2px;
+        background-color: var(--color-primary);
+        transition: flex 0.2s ease-in-out;
+    }
+    .contact_refs > *[data-active]::after {
+        flex: 1 0;
+    }
+    .contact_refs > *[data-active] {
+        color: var(--color-text)
     }
     .qrcode {
         grid-area: qr;
-        display: flex;
-        width: fit-content;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem var(--padding-lr);
+        position: relative;
+        padding: var(--padding-lr);
+        padding-bottom: calc(var(--padding-lr) - 1em);
         background-color: var(--color-text);
         color: var(--color-background);
         border-radius: var(--radius-normal);
+        font-size: calc(var(--fontsize-large) / 1.5);
         text-align: center;
-        font-size: 2em;
+        white-space: nowrap;
+        aspect-ratio: 1;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+    .qrcode[lazy-animation] {
+        transform: scale(0);
+    }
+    .qrcode > *:not(#qrcode__viewer) {
+        position: absolute;
+        transform: translate(-50%, -50%);
+    }
+    .qrcode > span {
+        top: calc(var(--padding-lr) / 2);
+    }
+    .qrcode > a {
+        top: calc(100% - (var(--padding-lr) / 2));
     }
     #qrcode__viewer {
         width: 100%;
         aspect-ratio: 1;
+        overflow: hidden;
     }
 </style>

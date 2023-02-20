@@ -1,7 +1,18 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;400&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap');
+
 :root {
     --color-background: #181823;
     --color-primary: #537FE7;
     --color-secondary: #C0EEF2;
     --color-text: #E9F8F9;
+    --color-fade: #505054;
     --color-overlay: rgba(255, 255, 255, 0.2);
+    --color-gradient-bt: #4158D0 0%, #C850C0 46%, #FFCC70 100%;
+    --color-gradient-lr: #00DBDE 0%, #FC00FF 100%;
+}
+
+body {
+    /* font-family: 'Kanit', sans-serif; */
+    font-family: 'Geostar Fill', cursive;
 }

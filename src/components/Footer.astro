@@ -1,0 +1,27 @@
+<footer>
+    <small>SCIENCE LAB © 2022</small>
+    Et excepteur officia sint fugiat irure incididunt laboris ullamco ad irure ad ipsum excepteur. Aliqua eiusmod aute est ex qui fugiat. Cillum pariatur irure sit ea laborum. Consequat consectetur sunt laborum in. Nisi nostrud dolor ullamco id commodo cupidatat excepteur nulla mollit id minim enim in duis.
+</footer>
+
+<style>
+    footer {
+        display: flex;
+        flex-direction: column;
+        text-align: justify;
+        padding: 1rem;
+        color: var(--color-fade);
+    }
+    footer > small {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--color-text);
+    }
+    footer > small::after {
+        content: "";
+        flex: 1 0;
+        height: 3px;
+        background-image: linear-gradient(to right, var(--color-gradient-bt));
+        border-radius: 2px;
+    }
+</style>

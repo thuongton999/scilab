@@ -9,7 +9,7 @@
 
 <style>
     header {
-        position: sticky;
+        position: fixed;
         top: 0;
         left: 0; right: 0;
         display: flex;
@@ -22,7 +22,7 @@
         margin-bottom: 3rem;
     }
     .left {
-        font-size: 1.5rem;
+        font-size: var(--fontsize-normal);
     }
     .right {
         display: flex;
@@ -33,7 +33,7 @@
     .right > *:last-child {
         padding: 0.2rem 1rem;
         border-radius: 1em;
-        background-color: var(--color-text);
+        background-image: linear-gradient(to bottom right, var(--color-gradient-lr));
         color: var(--color-background);
         text-shadow: none;
     }

@@ -1,9 +1,12 @@
 ---
 import "../styles/reset.css";
 import "../styles/theme.css";
+import "../styles/spacing.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 
 export interface Props {
-	title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
@@ -11,68 +14,99 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body>
+        <Header />
+        <slot />
+        <Footer />
+    </body>
 </html>
 
+<script>
+    const prepareAnimation = () => {
+        const enableAnimation = (entries) => {
+            entries.forEach((entry) => {
+                const element = entry.target;
+                if (entry.isIntersecting) {
+                    element.removeAttribute("lazy-animation");
+                    if (!element.hasAttribute("lazy-once")) return;
+                    observer.unobserve(element);
+                } else {
+                    element.setAttribute("lazy-animation", "");
+                }
+            });
+        };
+        let options = {
+            threshold: 0.8,
+        };
+        const observer = new IntersectionObserver(enableAnimation, options);
+        const lazyAnimationElements =
+            document.querySelectorAll("[lazy-animation]");
+        lazyAnimationElements.forEach((el) => {
+            observer.observe(el);
+        });
+    };
+    document.addEventListener("DOMContentLoaded", prepareAnimation);
+</script>
+
 <style is:global>
-	@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;400&display=swap');
-	:root {
-		--padding-lr: 4rem;
-		--padding-ar: 0.2rem 1rem;
-		--padding-bt: 1rem 2rem;
-		--margin-bt-large: 5rem;
-		--margin-bt-normal: 3rem;
-		--shadow-txt: 0 0 5px;
-		--radius-large: 5rem;
-		--radius-normal: 3rem;
-	}
-	body {
-		display: flex;
-		flex-direction: column;
-		font-family: 'Kanit', sans-serif;
-		overflow-x: hidden;
-		background-color: var(--color-background);
-		color: var(--color-text);
-		box-sizing: border-box;
-	}
-	img {
-		background-color: var(--color-text);
-		object-fit: cover;
-		object-position: center;
-	}
-	a[use-arrow]::after {
-		content: " ↗";
-	}
-	h1, h2, h3, h4, h5, h6 {
-		line-height: 100%;
-	}
-	h1 {
-		font-size: 4em;
+    body {
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        background-color: var(--color-background);
+        color: var(--color-text);
+        box-sizing: border-box;
+    }
+    img {
+        background-color: var(--color-text);
+        transform: scale(1.001);
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    *[hide-scrollbar]::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    *[hide-scrollbar] {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        scroll-behavior: smooth;
+    }
+    a[use-arrow]::after {
+        content: " ↗";
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 100%;
+    }
+    h1 {
+        font-size: var(--fontsize-larger);
         font-weight: bold;
-	}
-	h2 {
-		font-size: 2em;
-	}
-	p {
-		font-weight: 300;
-		font-size: 1.2em;
-		max-width: fit-content;
-		max-width: -moz-fit-content;
-	}
-	i {
-		font-style: italic;
-		font-weight: 100;
-	}
-	b {
-		font-weight: bold;
-	}
+    }
+    h2 {
+        font-size: var(--fontsize-large);
+    }
+    p {
+        font-weight: 300;
+        font-size: var(--fontsize-normal);
+        max-width: fit-content;
+        max-width: -moz-fit-content;
+    }
+    i {
+        font-style: italic;
+        font-weight: 100;
+    }
+    b {
+        font-weight: bold;
+    }
 </style>

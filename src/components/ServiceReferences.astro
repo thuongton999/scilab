@@ -1,6 +1,4 @@
 ---
-const { class: className } = Astro.props;
-
 const references = [
     {
         title: "STEM",
@@ -16,7 +14,7 @@ const references = [
     }
 ];
 ---
-<section class={className}> 
+<section {...Astro.props} lazy-animation lazy-once> 
     {references.map(reference => (
         <p>
             <b>{reference.title}</b>
@@ -36,8 +34,12 @@ const references = [
 		max-height: calc(var(--line-clamp) * var(--line-height));
         text-overflow: ellipsis;
 		overflow: hidden;
+        opacity: 1;
 	}
 	p > b {
 		white-space: nowrap;
 	}
+    section[lazy-animation] > p {
+        opacity: 0;
+    }
 </style>

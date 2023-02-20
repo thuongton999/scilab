@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
 import ServiceReferences from "../components/ServiceReferences.astro";
 import ProjectsCarousel from "../components/ProjectsCarousel.astro";
 import ImageCarousel from "../components/ImageCarousel.astro";
 import Contact from "../components/Contact.astro";
+import Img from "../components/Img.astro";
 
 const hero_img = "https://picsum.photos/1920/1080";
 const service_img = "https://picsum.photos/1920/1080?grayscale";
@@ -38,13 +38,10 @@ const roadmap_imgs = [
 ---
 
 <Layout title="SciLab">
-    <Header />
-    <main>
-        <article class="hero" style={`--bg-url: url(${hero_img})`}>
-            <h1>
-                <i>Tempor dolore ipsum</i>
-                <b>Reprehenderit consectetur pariatur deserunt</b>
-            </h1>
+    <main style="--blobX: 50%; --blobY: 50%" id="blob_container">
+        <article class="hero" style={`--bg-url: url(${hero_img})`} lazy-animation>
+            <h2><i>Tempor dolore ipsum</i></h2>
+            <h1><b>Science Lab</b></h1>
             <p>
                 Sunt adipisicing Lorem nulla nostrud reprehenderit laboris elit
                 ex mollit et voluptate Lorem labore amet.
@@ -55,16 +52,20 @@ const roadmap_imgs = [
             </div>
         </article>
         <article class="services">
-            <h1 class="services__header">
+            <h1 class="services__header" lazy-animation lazy-once>
                 Our Service
                 <div>
                     <button type="button" id="previous__service">←</button>
-                    <button type="button" id="next__service">→</button>
+                    <button
+                        type="button"
+                        id="next__service"
+                        data-available="true">→</button
+                    >
                 </div>
             </h1>
-            <ServiceReferences class="services__references"/>
+            <ServiceReferences id="services__references"/>
             <div class="services__image">
-                <img src={service_img} alt="service" />
+                <Img src={service_img} alt="service" />
             </div>
             <h2>
                 Ad veniam ullamco fugiat reprehenderit incididunt elit deserunt
@@ -72,7 +73,7 @@ const roadmap_imgs = [
                 laboris sit culpa est nulla consectetur aliquip consectetur non.
             </h2>
             <a href="/services" use-arrow>Discover our missions</a>
-            <ProjectsCarousel />
+            <ProjectsCarousel class="service__projects"/>
             <section class="services__info">
                 <h2 class="services__info__header">Our Lab</h2>
                 <div class="services__info__reference">
@@ -92,7 +93,7 @@ const roadmap_imgs = [
                     Eiusmod eu excepteur ea dolore consequat irure consectetur.
                 </p>
                 <span class="services__info__experience">
-                    <b>20+</b> Days of experience 😏
+                    <b>20+</b> Days of experience
                 </span>
             </section>
         </article>
@@ -103,7 +104,7 @@ const roadmap_imgs = [
                 incididunt sint nulla. Fugiat voluptate fugiat sint anim tempor
                 ut. Occaecat excepteur consequat veniam ad quis in.
             </p>
-            <ImageCarousel class="roadmap__carousel" imgs={roadmap_imgs}/>
+            <ImageCarousel class="roadmap__carousel" imgs={roadmap_imgs} />
         </article>
         <article>
             <Contact />
@@ -111,22 +112,58 @@ const roadmap_imgs = [
     </main>
 </Layout>
 <script>
-    let services_show_controller = {
-        prev: document.getElementById("previous__service"),
-        next: document.getElementById("next__service"),
+    const blobContainer = document.getElementById("blob_container");
+    window.addEventListener("mousemove", (ev) => {
+        ev.preventDefault();
+        const { clientX, clientY } = ev;
+        const setBlobPosition = () => {
+            blobContainer.style.setProperty("--blobX", `${clientX}px`);
+            blobContainer.style.setProperty("--blobY", `${clientY}px`);
+        };
+        window.requestAnimationFrame(setBlobPosition);
+    });
+
+    const serviceRefs = document.getElementById(
+        "services__references"
+    ).children;
+    const servicePrevBt = document.getElementById("previous__service");
+    const serviceNextBt = document.getElementById("next__service");
+    let currentServiceIdx = 0;
+    const updateTranslate = (idx: number) => {
+        servicePrevBt.dataset.available = `${currentServiceIdx > 0}`;
+        serviceNextBt.dataset.available = `${
+            currentServiceIdx < serviceRefs.length - 1
+        }`;
+        for (const ref of serviceRefs) {
+            if (!(ref instanceof HTMLElement)) continue;
+            ref.style.setProperty("--transX", `${idx}`);
+        }
     };
-    // services_show_controller.prev.addEventListener("onclick", lastService);
-    // services_show_controller.next.addEventListener("onclick", nextService);
-    // let counter = 0;
-    // function nextService() {
-    // 	counter++;
-    // }
-    // function lastService() {
-    // 	counter--;
-    // }
+    servicePrevBt.addEventListener("click", () => {
+        currentServiceIdx = Math.max(currentServiceIdx - 1, 0);
+        updateTranslate(currentServiceIdx);
+    });
+    serviceNextBt.addEventListener("click", () => {
+        currentServiceIdx = Math.min(
+            currentServiceIdx + 1,
+            serviceRefs.length - 1
+        );
+        updateTranslate(currentServiceIdx);
+    });
 </script>
 
 <style>
+    @keyframes rotate {
+        from {
+            rotate: 0deg;
+        }
+        50% {
+            scale: 1 1.15;
+        }
+        to {
+            rotate: 360deg;
+        }
+    }
     main {
         width: 100%;
         overflow: hidden;
@@ -136,38 +173,68 @@ const roadmap_imgs = [
         padding: 0 var(--padding-lr);
         margin-bottom: var(--margin-bt-large);
     }
+    #blob_container::before {
+        content: "";
+        position: fixed;
+        width: 20vw;
+        aspect-ratio: 1;
+        background-image: linear-gradient(var(--color-gradient-lr));
+        border-radius: 50%;
+        filter: blur(100px);
+        transform-origin: 0% 0%;
+        transform: translate(-50%, -50%);
+        opacity: 0.4;
+        top: var(--blobY);
+        left: var(--blobX);
+        pointer-events: none;
+        z-index: 999999;
+        animation: rotate 20s infinite;
+        backface-visibility: hidden;
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
     .hero {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 2rem 50% 0 var(--padding-lr);
-        text-shadow: var(--shadow-txt) var(--color-background);
+        align-items: center;
+        text-align: justify;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
     }
     .hero::before,
     .hero::after {
         content: "";
         position: absolute;
-        inset: calc(var(--radius-large) / -2) -5% calc(var(--radius-large) / -2)
-            30%;
+        inset: 0;
         z-index: -1;
     }
     .hero::before {
-        border-radius: var(--radius-large) 0 0 var(--radius-large);
         background-image: var(--bg-url);
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
+        background-attachment: fixed;
         background-color: var(--color-text);
+        transform: scale(100%);
+        filter: brightness(80%);
+        transition: transform 0.3s ease-in-out;
     }
     .hero::after {
-        transform: scale(105%);
-        box-shadow: inset 0 0 3.5rem 8rem var(--color-background);
+        background-image: linear-gradient(
+            to top,
+            var(--color-background),
+            transparent
+        );
+    }
+    .hero[lazy-animation]::before {
+        transform: scale(120%);
     }
     .hero > h1 {
         margin-bottom: calc(var(--margin-bt-normal) / 2);
     }
     .hero > p {
-        padding-right: 30%;
+        padding: 0 20%;
         margin-bottom: var(--margin-bt-normal);
     }
     .hero__references {
@@ -189,6 +256,13 @@ const roadmap_imgs = [
         display: flex;
         justify-content: space-between;
         align-items: center;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+    }
+    .services__header[lazy-animation] {
+        opacity: 0;
+        transform: translateY(50%);
+
     }
     .services {
         display: flex;
@@ -202,37 +276,43 @@ const roadmap_imgs = [
     }
     #previous__service,
     #next__service {
-        font-size: 4rem;
-        line-height: 4rem;
-        margin-left: 1rem;
-        cursor: pointer;
-    }
-    #next__service {
+        font-size: var(--fontsize-large);
         line-height: 3rem;
         padding: 0.2rem 2rem 0.7rem 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+    #previous__service[data-available="true"],
+    #next__service[data-available="true"] {
         border-radius: 3rem;
         background-color: var(--color-overlay);
     }
-    .services__references {
+    #services__references {
         --content-gap: 2rem;
         --border-width: 3px;
         position: relative;
         display: flex;
-        overflow: hidden;
         width: 100%;
+        overflow: hidden;
         gap: var(--content-gap);
-        padding: 2rem 0 0 2rem;
+        padding: var(--content-gap) 0 0 var(--content-gap);
     }
-    .services__references :global(p) {
+    #services__references > :global(*) {
+        transform: translateX(
+            calc(-100% * var(--transX) - (var(--content-gap) * var(--transX)))
+        );
+        transition: all 1s ease-in-out;
+    }
+    #services__references :global(p) {
         flex: 1 0 calc(50% - var(--content-gap));
     }
-    .services__references::before,
-    .services__references::after {
+    #services__references::before,
+    #services__references::after {
         content: "";
         position: absolute;
         inset: 0;
     }
-    .services__references::before {
+    #services__references::before {
         border: var(--border-width) solid transparent;
         background: linear-gradient(var(--color-secondary), transparent 50%),
             border-box;
@@ -247,10 +327,6 @@ const roadmap_imgs = [
     }
     .services__image {
         position: relative;
-    }
-    .services__image > img {
-        width: 100%;
-        aspect-ratio: 16 / 9;
         border-radius: var(--radius-large);
     }
     .services__image::after {
@@ -262,10 +338,11 @@ const roadmap_imgs = [
             0 0 3rem 3rem var(--color-background);
     }
     .services > h2 {
-        padding: 0 calc(var(--padding-lr) * 2);
+        padding: 0 10%;
         text-align: center;
     }
     .services > a {
+        white-space: nowrap;
         position: relative;
         left: 50%;
         transform: translateX(-50%);
@@ -278,13 +355,13 @@ const roadmap_imgs = [
     .services__info {
         margin: 2rem 0;
         display: grid;
-        gap: 1rem;
+        gap: 2rem 1rem;
         grid-template-areas:
             "h d d"
             "r d d"
             "r s s";
         grid-template-columns: 40% 30% 30%;
-        font-size: 1.25rem;
+        font-size: var(--fontsize-normal);
     }
     .services__info__header {
         grid-area: h;
@@ -300,7 +377,8 @@ const roadmap_imgs = [
         align-items: flex-start;
     }
     .services__info__reference > a {
-        font-size: 3em;
+        font-size: var(--fontsize-large);
+        white-space: nowrap;
         color: var(--color-background);
         background-color: var(--color-text);
         padding: 2rem 3rem;
@@ -311,41 +389,34 @@ const roadmap_imgs = [
         grid-area: s;
         display: flex;
         justify-content: space-between;
-        font-size: 2em;
+        font-size: var(--fontsize-large);
         font-weight: 300;
     }
     .roadmap {
         padding: 0;
         display: flex;
         flex-direction: column;
+        margin-bottom: 0;
         gap: 1rem;
     }
     .roadmap > *:not(.roadmap__carousel) {
         padding: 0 var(--padding-lr);
     }
-    .roadmap > p {
-        font-size: 1.5em;
-    }
     .roadmap__carousel {
         display: flex;
         flex-wrap: nowrap;
-        overflow: hidden;
+        overflow: auto;
         counter-reset: roadmap_img;
-        padding-top: 10%;
+        padding: 10% 0;
         transform: rotate(5deg) scale(105%);
     }
-    .roadmap__carousel :global(img) {
-        width: 100%;
-        height: 100%;
-    }
-    .roadmap__carousel > :global(*) {
+    .roadmap__carousel > :global(.img) {
         flex-shrink: 0;
         position: relative;
         --idx_rm_height: calc(var(--radius-large) * 3.5);
         height: var(--idx_rm_height);
         aspect-ratio: 1.5;
         border-radius: var(--idx_rm_height);
-        overflow: hidden;
         margin-right: 1rem;
     }
     .roadmap__carousel > :global(*)::after {
@@ -356,7 +427,7 @@ const roadmap_imgs = [
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: var(--color-overlay);
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(10px);
         padding: 1em 3em;
         border-radius: var(--radius-normal);
         overflow: hidden;

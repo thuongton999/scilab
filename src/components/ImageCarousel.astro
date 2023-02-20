@@ -1,11 +1,26 @@
 ---
+interface Props {
+    class?: string
+    imgs: {src: string, alt: string}[]
+}
+import Img from './Img.astro';
 const { class: className, imgs } = Astro.props;
 ---
 
-<section class={className}>
-    {imgs.map((img: { src: string; alt: string }) => (
-        <div>
-            <img src={img.src} alt={img.alt} />
-        </div>
-    ))}
+<section class={className} id="img_carousel" hide-scrollbar>
+    {
+        imgs.map((img: { src: string; alt: string }) => (
+            <Img src={img.src} alt={img.alt} />
+        ))
+    }
 </section>
+
+<script>
+    const img_carousel = document.getElementById("img_carousel");
+    img_carousel.addEventListener("mousemove", (ev) => {
+        ev.preventDefault();
+        let mouseRelativeX = ev.clientX / window.innerWidth;
+        let carousel_width = img_carousel.offsetWidth;
+        img_carousel.scrollTo(mouseRelativeX * carousel_width, 0);
+    });
+</script>

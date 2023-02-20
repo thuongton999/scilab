@@ -1,0 +1,13 @@
+:root {
+    --padding-lr: 4rem;
+    --padding-ar: 0.2rem 1rem;
+    --padding-bt: 1rem 2rem;
+    --margin-bt-large: 5rem;
+    --margin-bt-normal: 3rem;
+    --shadow-txt: 0 0 5px;
+    --radius-large: 5rem;
+    --radius-normal: 3rem;
+    --fontsize-larger: 5rem;
+    --fontsize-large: 3rem;
+    --fontsize-normal: 1.2rem;
+}

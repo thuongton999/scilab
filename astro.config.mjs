@@ -7,5 +7,6 @@ import { astroImageTools } from "astro-imagetools";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://scilab.netlify.app",
   integrations: [robotsTxt(), astroImageTools]
 });

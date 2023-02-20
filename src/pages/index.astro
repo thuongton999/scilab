@@ -37,7 +37,7 @@ const roadmap_imgs = [
 ];
 ---
 
-<Layout title="Science Lab" seo_img="/public/media/seo-bg.png">
+<Layout title="Science Lab" seo_img={`${Astro.url}/media/seo-bg.png`}>
     <main style="--blobX: 50%; --blobY: 50%" id="blob_container">
         <article class="hero" style={`--bg-url: url(${hero_img})`} lazy-animation>
             <h2><i>Tempor dolore ipsum</i></h2>

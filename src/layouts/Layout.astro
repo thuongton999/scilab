@@ -4,54 +4,64 @@ import "../styles/theme.css";
 import "../styles/spacing.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { SEO } from "astro-seo";
 
 export interface Props {
     title: string;
     seo_img: string;
+    seo_content?: string;
 }
 
-const { title, seo_img } = Astro.props;
+const { 
+    title, 
+    seo_img, 
+    seo_content="Dự án Science Lab được thành lập nhằm xóa bỏ rào cản STEM cho học sinh THCS & THPT ở Phú Yên bằng cách tổ chức các hoạt động STEM kết hợp trực tuyến và trực tiếp trên địa bàn tỉnh"
+} = Astro.props;
+
 ---
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="generator" content={Astro.generator} />
-        <!-- Primary Meta Tags -->
-        <title>{title}</title>
-        <meta name="title" content="Science Lab - Phú Yên" />
-        <meta
-            name="description"
-            content="Dự án Science Lab được thành lập nhằm xóa bỏ rào cản STEM cho học sinh THCS & THPT ở Phú Yên bằng cách tổ chức các hoạt động STEM kết hợp trực tuyến và trực tiếp trên địa bàn tỉnh"
-        />
-
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={Astro.url} />
-        <meta property="og:title" content="Science Lab - Phú Yên" />
-        <meta
-            property="og:description"
-            content="Dự án Science Lab được thành lập nhằm xóa bỏ rào cản STEM cho học sinh THCS & THPT ở Phú Yên bằng cách tổ chức các hoạt động STEM kết hợp trực tuyến và trực tiếp trên địa bàn tỉnh"
-        />
-        <meta
-            property="og:image"
-            content={seo_img}
-        />
-
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={Astro.url} />
-        <meta property="twitter:title" content="Science Lab - Phú Yên" />
-        <meta
-            property="twitter:description"
-            content="Dự án Science Lab được thành lập nhằm xóa bỏ rào cản STEM cho học sinh THCS & THPT ở Phú Yên bằng cách tổ chức các hoạt động STEM kết hợp trực tuyến và trực tiếp trên địa bàn tỉnh"
-        />
-        <meta
-            property="twitter:image"
-            content={seo_img}
+        <SEO
+            title={title}
+            description={seo_content}
+            canonical={Astro.site.toString()}
+            openGraph={{
+                basic: {
+                    title: "Science Lab - Phú Yên",
+                    type: "website",
+                    image: seo_img,
+                    url: Astro.site.toString(),
+                },
+                optional: {
+                    description: seo_content
+                },
+            }}
+            twitter={{
+                card: "summary_large_image",
+                description: seo_content,
+                image: seo_img
+            }}
+            extend={{
+                // extending the default link tags
+                link: [
+                    { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }
+                ],
+                // extending the default meta tags
+                meta: [
+                    {
+                        name: "viewport",
+                        content: "width=device-width, initial-scale=1.0" },
+                    {
+                        name: "twitter:url",
+                        content: Astro.site.toString(), },
+                    { 
+                        name: "twitter:title", 
+                        content: "Science Lab - Phú Yên" },
+                ],
+            }}
         />
     </head>
     <body>

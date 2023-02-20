@@ -20,7 +20,6 @@ const contacts = [
     const refs = document.getElementsByClassName("reference");
     const qrcodeViewer = document.getElementById("qrcode__viewer");
     const qrcodeUrl = document.getElementById("qrcode__url");
-    var style = getComputedStyle(document.body);
     let cached_qrcode = {};
     let lastRef = refs[0];
     const generateQR = (ref) => {
@@ -40,7 +39,7 @@ const contacts = [
             padding: 0,
             width: 256,
             height: 256,
-            color: style.getPropertyValue('--color-background'),
+            color: "var(--color-background)",
             background: "transparent",
             ecl: "H",
             join: true,

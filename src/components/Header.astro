@@ -1,7 +1,7 @@
 ---
 import NavBarIcon from "./NavBarIcon.astro";
 ---
-<header>
+<header style={`--bg-header-img: url(${Astro.url}/media/vibing-cat.gif)`}>
     <a class="left" href="/">SCIENCE Lab</a>
     <nav class="right">
         <NavBarIcon class="right__icon"/>
@@ -76,7 +76,7 @@ import NavBarIcon from "./NavBarIcon.astro";
         }
         .right:hover .right__dropdown {
             padding-bottom: 1rem;
-            background-image: url(https://media.tenor.com/-uMIofTxVWIAAAAd/cat-vibing-vibing-cat.gif);
+            background-image: var(--bg-header-img);
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;

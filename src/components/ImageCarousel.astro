@@ -19,6 +19,7 @@ const { class: className, imgs } = Astro.props;
     const img_carousel = document.getElementById("img_carousel");
     img_carousel.addEventListener("mousemove", (ev) => {
         ev.preventDefault();
+        if (window.innerWidth < 1024) return;
         let mouseRelativeX = ev.clientX / window.innerWidth;
         let carousel_width = img_carousel.offsetWidth;
         img_carousel.scrollTo(mouseRelativeX * carousel_width, 0);

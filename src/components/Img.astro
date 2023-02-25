@@ -3,7 +3,7 @@ import { Img } from "astro-imagetools/components";
 const { class: className, id, style, ...props } = Astro.props; 
 ---
 
-<div class={`img ${className}`} id={id} style={style}>
+<div class={`img ${className || ""}`} id={id} style={style}>
     <Img {...props} />
 </div>
 

@@ -68,8 +68,7 @@ const contacts = [
     </ul>
     <div class="qrcode" lazy-animation lazy-once>
         <span>Scan me</span>
-        <div id="qrcode__viewer">
-        </div>
+        <div id="qrcode__viewer"></div>
         <a id="qrcode__url" href="/">Or - click here</a>
     </div>
 </section>
@@ -82,7 +81,7 @@ const contacts = [
             "r qr";
         grid-template-columns: 1fr 30%;
         grid-template-rows: 1fr 70%;
-        column-gap: 2rem;
+        gap: 2rem;
     }
     .header {
         grid-area: h;
@@ -117,14 +116,14 @@ const contacts = [
         color: var(--color-text)
     }
     .qrcode {
+        --qr-padding: var(--padding-lr);
         grid-area: qr;
         position: relative;
-        padding: var(--padding-lr);
-        padding-bottom: calc(var(--padding-lr) - 1em);
+        padding: var(--qr-padding);
+        padding-bottom: calc(var(--qr-padding) - 1em);
         background-color: var(--color-text);
         color: var(--color-background);
         border-radius: var(--radius-normal);
-        font-size: calc(var(--fontsize-large) / 1.5);
         text-align: center;
         white-space: nowrap;
         aspect-ratio: 1;
@@ -138,15 +137,29 @@ const contacts = [
         position: absolute;
         transform: translate(-50%, -50%);
     }
+    .qrcode > :not(#qrcode__viewer) {
+        width: 100%;
+        font-size: calc(var(--qr-padding) / 2);
+    }
     .qrcode > span {
-        top: calc(var(--padding-lr) / 2);
+        top: calc(var(--qr-padding) / 2);
     }
     .qrcode > a {
-        top: calc(100% - (var(--padding-lr) / 2));
+        top: calc(100% - (var(--qr-padding) / 2));
     }
     #qrcode__viewer {
         width: 100%;
         aspect-ratio: 1;
         overflow: hidden;
+    }
+    @media only screen and (max-width: 767px) {
+        /* For mobile phones */
+        section {
+            display: flex;
+            flex-direction: column;
+        }
+        .qrcode {
+            --qr-padding: calc(var(--padding-lr) * 2);
+        }
     }
 </style>

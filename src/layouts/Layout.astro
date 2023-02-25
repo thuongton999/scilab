@@ -1,7 +1,7 @@
 ---
 import "../styles/reset.css";
-import "../styles/theme.css";
 import "../styles/spacing.css";
+import "../styles/theme.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SEO } from "astro-seo";
@@ -38,6 +38,10 @@ const {
                 optional: {
                     description: seo_content
                 },
+                image: {
+                    url: seo_img,
+                    alt: "Science Lab"
+                }
             }}
             twitter={{
                 card: "summary_large_image",
@@ -124,6 +128,30 @@ const {
     a[use-arrow]::after {
         content: " ↗";
     }
+    a[hover-overlay] {
+        border: 2px solid var(--color-text);
+        position: relative;
+        overflow: hidden;
+        transition: 
+            color 0.3s ease-in-out,
+            background-color 0.35s ease-in-out;
+    }
+    a[hover-overlay]::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        background-color: var(--color-text);
+        transform: translateX(110%) skewX(-20deg) scaleX(110%);
+        z-index: -1;
+        transition: transform 0.3s ease-in-out;
+    }
+    a[hover-overlay]:hover {
+        color: var(--color-background);
+        background-color: var(--color-text);
+    }
+    a[hover-overlay]:hover::before {
+        transform: translateX(0%) skewX(-20deg) scaleX(110%);
+    }
     h1,
     h2,
     h3,
@@ -142,8 +170,6 @@ const {
     p {
         font-weight: 300;
         font-size: var(--fontsize-normal);
-        max-width: fit-content;
-        max-width: -moz-fit-content;
     }
     i {
         font-style: italic;

@@ -1,13 +1,12 @@
 :root {
-    --padding-lr: 4rem;
-    --padding-ar: 0.2rem 1rem;
-    --padding-bt: 1rem 2rem;
-    --margin-bt-large: 5rem;
+    --padding-lr: clamp(1rem, 5vw, 4rem);
+    --padding-bt: clamp(0.2rem, 3vw, 1rem) clamp(0.5rem, 5vw, 2rem);
+    --margin-bt-large: clamp(2rem, 10vw, 5rem);
     --margin-bt-normal: 3rem;
     --shadow-txt: 0 0 5px;
-    --radius-large: 5rem;
-    --radius-normal: 3rem;
-    --fontsize-larger: 5rem;
-    --fontsize-large: 3rem;
-    --fontsize-normal: 1.2rem;
+    --radius-large: clamp(2rem, 15vw, 5rem);
+    --radius-normal: clamp(1rem, 10vw, 3rem);
+    --fontsize-larger: clamp(2rem, 8vw, 5rem);
+    --fontsize-large: clamp(1rem, 5vw, 3rem);
+    --fontsize-normal: clamp(0.8rem, 3vw, 1.2rem);
 }

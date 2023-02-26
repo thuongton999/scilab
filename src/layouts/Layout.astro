@@ -100,7 +100,20 @@ const {
             observer.observe(el);
         });
     };
+    
+    import {
+        getDarkModeDetector,
+        getColorScheme,
+        setColorScheme
+    } from "../utils/color-scheme.js";
+
+    const autoColorScheme = () => setColorScheme(getColorScheme());
     document.addEventListener("DOMContentLoaded", prepareAnimation);
+    getDarkModeDetector().addEventListener('change', event => {
+        const newColorScheme = event.matches ? "dark" : "light";
+        setColorScheme(newColorScheme);
+    });
+    document.addEventListener("DOMContentLoaded", autoColorScheme);
 </script>
 
 <style is:global>

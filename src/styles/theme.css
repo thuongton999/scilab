@@ -1,19 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Montserrat:wght@400;700&display=swap');
 
+/* default is light mode */
 :root {
-    --color-background: #181823;
-    --color-primary: #537FE7;
-    --color-secondary: #C0EEF2;
-    --color-text: #E9F8F9;
-    --color-fade: #505054;
-    --color-overlay: rgba(255, 255, 255, 0.3);
+    --color-background: #E3FDFD;
+    --color-primary: #CBF1F5;
+    --color-secondary: #A6E3E9;
+    --color-text: #71C9CE;
+    --color-fade: rgba(0, 0, 0, 0.2);
+    --color-overlay: rgba(0, 0, 0, 0.1);
     --color-overlay-dk: rgba(0, 0, 0, 0.7);
     --color-gradient-bt: #4158D0 0%, #C850C0 46%, #FFCC70 100%;
     --color-gradient-lr: #00DBDE 0%, #FC00FF 100%;
 }
 
+:root[theme="dark"] {
+    --color-background: #222831;
+    --color-primary: #393E46;
+    --color-secondary: #00ADB5;
+    --color-text: #EEEEEE;
+    --color-fade: rgba(255, 255, 255, 0.2);
+    --color-overlay: rgba(255, 255, 255, 0.3);
+}
+
 body {
     font-family: 'Courier Prime', monospace;
     -webkit-font-smoothing: antialiased;
-    /* font-family: "Roboto Condensed", sans-serif; */
 }

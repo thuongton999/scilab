@@ -6,7 +6,8 @@
     --color-secondary: #C0EEF2;
     --color-text: #E9F8F9;
     --color-fade: #505054;
-    --color-overlay: rgba(255, 255, 255, 0.2);
+    --color-overlay: rgba(255, 255, 255, 0.3);
+    --color-overlay-dk: rgba(0, 0, 0, 0.7);
     --color-gradient-bt: #4158D0 0%, #C850C0 46%, #FFCC70 100%;
     --color-gradient-lr: #00DBDE 0%, #FC00FF 100%;
 }

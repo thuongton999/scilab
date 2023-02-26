@@ -67,8 +67,8 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
     group[groupIndex].push(item);
     return group;
 }, []);
----
 
+---
 <section class={`${className} carousel`} {...props} lazy-animation>
     {imgGroups.map((group, glb_idx) => (
         <div class="carousel__group" data-show={!glb_idx} data-show-next={glb_idx === 1}>
@@ -123,7 +123,7 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
         backdrop-filter: blur(10px);
         font-size: var(--fontsize-large);
         line-height: 70%;
-        padding: 0.1rem 1rem 0.5rem 1rem;
+        padding: 0.1rem 1rem 0.4rem 1rem;
         border-radius: var(--radius-normal);
         overflow: hidden;
         cursor: pointer;

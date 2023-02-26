@@ -2,7 +2,7 @@
     --padding-lr: clamp(1rem, 5vw, 4rem);
     --padding-bt: clamp(0.2rem, 3vw, 1rem) clamp(0.5rem, 5vw, 2rem);
     --margin-bt-large: clamp(2rem, 10vw, 5rem);
-    --margin-bt-normal: 3rem;
+    --margin-bt-normal: clamp(1rem, 8vw, 3rem);
     --shadow-txt: 0 0 5px;
     --radius-large: clamp(2rem, 15vw, 5rem);
     --radius-normal: clamp(1rem, 10vw, 3rem);

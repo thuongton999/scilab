@@ -1,13 +1,14 @@
 ---
 interface Props {
-    class?: string
     imgs: {src: string, alt: string}[]
+    class?: string
+    props?: any
 }
 import Img from './Img.astro';
-const { class: className, imgs } = Astro.props;
+const { class: className, imgs, ...props } = Astro.props;
 ---
 
-<section class={className} id="img_carousel" hide-scrollbar>
+<section class={className} id="img_carousel" hide-scrollbar {...props}>
     {
         imgs.map((img: { src: string; alt: string }) => (
             <Img src={img.src} alt={img.alt} />
@@ -16,12 +17,17 @@ const { class: className, imgs } = Astro.props;
 </section>
 
 <script>
-    const img_carousel = document.getElementById("img_carousel");
-    img_carousel.addEventListener("mousemove", (ev) => {
-        ev.preventDefault();
-        if (window.innerWidth < 1024) return;
-        let mouseRelativeX = ev.clientX / window.innerWidth;
-        let carousel_width = img_carousel.offsetWidth;
-        img_carousel.scrollTo(mouseRelativeX * carousel_width, 0);
-    });
+    const init = () => {
+        const img_carousel = document.getElementById("img_carousel");
+        if (window.innerWidth >= 1024) {
+            img_carousel.addEventListener("mousemove", (ev) => {
+                ev.preventDefault();
+                let mouseRelativeX = ev.clientX / window.innerWidth;
+                let carousel_width = img_carousel.offsetWidth;
+                img_carousel.scrollTo(mouseRelativeX * carousel_width, 0);
+            });
+        } 
+    }
+    window.addEventListener("DOMContentLoaded", init);
+    window.addEventListener("resize", init);
 </script>

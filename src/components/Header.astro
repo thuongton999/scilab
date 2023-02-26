@@ -1,7 +1,8 @@
 ---
 import NavBarIcon from "./NavBarIcon.astro";
+const vibing_cat_url = new URL("/media/vibing-cat.gif", Astro.url);
 ---
-<header style={`--bg-header-img: url(${Astro.url}/media/vibing-cat.gif)`}>
+<header style={`--bg-header-img: url(${vibing_cat_url.toString()})`}>
     <a class="left" href="/">SCIENCE Lab</a>
     <nav class="right">
         <NavBarIcon class="right__icon"/>

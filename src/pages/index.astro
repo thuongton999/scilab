@@ -35,9 +35,10 @@ const roadmap_imgs = [
         alt: "A picsum image",
     },
 ];
+const background_image = new URL("/media/seo-bg.png", Astro.url);
 ---
 
-<Layout title="Science Lab" seo_img={`${Astro.url}/media/seo-bg.png`}>
+<Layout title="Science Lab" seo_img={background_image.toString()}>
     <main style="--blobX: 50%; --blobY: 50%" id="blob_container">
         <article class="hero" style={`--bg-url: url(${hero_img})`} lazy-animation>
             <h2><i>Tempor dolore ipsum</i></h2>
@@ -104,7 +105,7 @@ const roadmap_imgs = [
                 incididunt sint nulla. Fugiat voluptate fugiat sint anim tempor
                 ut. Occaecat excepteur consequat veniam ad quis in.
             </p>
-            <ImageCarousel class="roadmap__carousel" imgs={roadmap_imgs} />
+            <ImageCarousel class="roadmap__carousel" imgs={roadmap_imgs} force-gpu-acceleration/>
         </article>
         <article>
             <Contact />
@@ -112,17 +113,22 @@ const roadmap_imgs = [
     </main>
 </Layout>
 <script>
-    const blobContainer = document.getElementById("blob_container");
-    window.addEventListener("mousemove", (ev) => {
-        ev.preventDefault();
-        const { clientX, clientY } = ev;
-        const setBlobPosition = () => {
-            blobContainer.style.setProperty("--blobX", `${clientX}px`);
-            blobContainer.style.setProperty("--blobY", `${clientY}px`);
-        };
-        window.requestAnimationFrame(setBlobPosition);
-    });
-
+    const init = () => {
+        const blobContainer = document.getElementById("blob_container");
+        if (window.innerWidth < 1024) return;
+        window.addEventListener("mousemove", (ev) => {
+            ev.preventDefault();
+            const { clientX, clientY } = ev;
+            const setBlobPosition = () => {
+                blobContainer.style.setProperty("--blobX", `${clientX}px`);
+                blobContainer.style.setProperty("--blobY", `${clientY}px`);
+            };
+            window.requestAnimationFrame(setBlobPosition);
+        });
+    }
+    window.addEventListener("DOMContentLoaded", init);
+    window.addEventListener("resize", init);
+    
     const serviceRefs = document.getElementById(
         "services__references"
     ).children;
@@ -427,7 +433,7 @@ const roadmap_imgs = [
         border-radius: var(--idx_rm_height);
         margin-right: 1rem;
     }
-    .roadmap__carousel > :global(*)::after {
+    .roadmap__carousel > :global(.img)::after {
         counter-increment: roadmap_img;
         content: "PH" counter(roadmap_img);
         position: absolute;
@@ -435,10 +441,10 @@ const roadmap_imgs = [
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: var(--color-overlay);
-        backdrop-filter: blur(10px);
         padding: 1em 3em;
         border-radius: var(--radius-normal);
-        z-index: 1;
+        backdrop-filter: blur(10px);
+        z-index: 2;
     }
     @media only screen and (max-width: 767px) {
         /* For mobile phones: */
@@ -495,6 +501,13 @@ const roadmap_imgs = [
         }
         .services__info__reference > a {
             font-size: var(--fontsize-normal);
+        }
+        #blob_container::before {
+            display: none;
+        }
+        .roadmap__carousel > :global(.img)::after {
+            backdrop-filter: unset;
+            background-color: var(--color-overlay-dk);
         }
     }
 </style>

@@ -110,6 +110,7 @@ const {
         background-color: var(--color-background);
         color: var(--color-text);
         box-sizing: border-box;
+        font-size: var(--fontsize-normal);
     }
     img {
         background-color: var(--color-text);
@@ -125,6 +126,12 @@ const {
         scrollbar-width: none; /* Firefox */
         scroll-behavior: smooth;
     }
+    /* *[force-gpu-acceleration] {
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    } */
     a[use-arrow]::after {
         content: " ↗";
     }
@@ -169,7 +176,6 @@ const {
     }
     p {
         font-weight: 300;
-        font-size: var(--fontsize-normal);
     }
     i {
         font-style: italic;

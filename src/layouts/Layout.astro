@@ -2,6 +2,7 @@
 import "../styles/reset.css";
 import "../styles/spacing.css";
 import "../styles/theme.css";
+import "../styles/built_in_tags.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SEO } from "astro-seo";
@@ -111,77 +112,5 @@ const {
         color: var(--color-text);
         box-sizing: border-box;
         font-size: var(--fontsize-normal);
-    }
-    img {
-        background-color: var(--color-text);
-        transform: scale(1.001);
-    }
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    *[hide-scrollbar]::-webkit-scrollbar {
-        display: none;
-    }
-    /* Hide scrollbar for IE, Edge and Firefox */
-    *[hide-scrollbar] {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-        scroll-behavior: smooth;
-    }
-    /* *[force-gpu-acceleration] {
-        -webkit-transform: translate3d(0, 0, 0);
-        -moz-transform: translate3d(0, 0, 0);
-        -ms-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-    } */
-    a[use-arrow]::after {
-        content: " ↗";
-    }
-    a[hover-overlay] {
-        border: 2px solid var(--color-text);
-        position: relative;
-        overflow: hidden;
-        transition: 
-            color 0.3s ease-in-out,
-            background-color 0.35s ease-in-out;
-    }
-    a[hover-overlay]::before {
-        content: "";
-        position: absolute;
-        inset: -1px;
-        background-color: var(--color-text);
-        transform: translateX(110%) skewX(-20deg) scaleX(110%);
-        z-index: -1;
-        transition: transform 0.3s ease-in-out;
-    }
-    a[hover-overlay]:hover {
-        color: var(--color-background);
-        background-color: var(--color-text);
-    }
-    a[hover-overlay]:hover::before {
-        transform: translateX(0%) skewX(-20deg) scaleX(110%);
-    }
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        line-height: 100%;
-    }
-    h1 {
-        font-size: var(--fontsize-larger);
-        font-weight: bold;
-    }
-    h2 {
-        font-size: var(--fontsize-large);
-    }
-    p {
-        font-weight: 300;
-    }
-    i {
-        font-style: italic;
-        font-weight: 100;
-    }
-    b {
-        font-weight: bold;
     }
 </style>

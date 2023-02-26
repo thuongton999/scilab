@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geostar+Fill&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=Montserrat:wght@400;700&display=swap');
 
 :root {
     --color-background: #181823;
@@ -13,7 +13,7 @@
 }
 
 body {
-    font-family: 'Geostar Fill', cursive;
+    font-family: 'Courier Prime', monospace;
     -webkit-font-smoothing: antialiased;
     /* font-family: "Roboto Condensed", sans-serif; */
 }

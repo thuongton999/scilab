@@ -22,7 +22,7 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", Astro.url);
     const colorSchemeSwitcher = document.getElementById("colorscheme_switcher");
 
     colorSchemeSwitcher.addEventListener("click", () => {
-        setColorScheme(isDarkMode ? "dark" : "light");
+        setColorScheme(isDarkMode ? "light" : "dark");
         isDarkMode = !isDarkMode;
     });
 </script>
@@ -54,9 +54,6 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", Astro.url);
         align-items: center;
         gap: var(--item-gap);
     }
-    #colorscheme_switcher {
-        cursor: pointer;
-    }
     .register {
         padding: 0.2rem 1rem;
         background-color: var(--color-secondary);
@@ -77,7 +74,7 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", Astro.url);
         /* For tablets: */
         .right__icon {
             display: block;
-            height: 2em;
+            width: 1.5em;
             transition: color 0.3s ease;
         }
         .right__dropdown {

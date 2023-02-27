@@ -1,5 +1,6 @@
 ---
 import Img from "./Img.astro";
+import ArrowRightIcon from "../icons/ArrowRightIcon.astro";
 const { class: className, ...props } = Astro.props;
 
 const carousel_imgs = [
@@ -86,7 +87,7 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
             })}
         </div>
     ))}
-    <button type="button" id="ps_next_img">→</button>
+    <ArrowRightIcon type="button" id="ps_next_img"/>
 </section>
 
 <script>
@@ -114,16 +115,16 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
     section {
         position: relative;
     }
-    button#ps_next_img {
+    #ps_next_img {
         position: absolute;
         top: 50%;
         right: 0%;
         transform: translate(50%, -50%);
         background-color: var(--color-overlay);
         backdrop-filter: blur(10px);
-        font-size: var(--fontsize-large);
+        font-size: var(--fontsize-normal);
         line-height: 70%;
-        padding: 0.1rem 1rem 0.4rem 1rem;
+        padding: 0.5rem 1.5rem;
         border-radius: var(--radius-normal);
         overflow: hidden;
         cursor: pointer;

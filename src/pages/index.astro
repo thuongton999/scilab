@@ -5,6 +5,8 @@ import ProjectsCarousel from "../components/ProjectsCarousel.astro";
 import ImageCarousel from "../components/ImageCarousel.astro";
 import Contact from "../components/Contact.astro";
 import Img from "../components/Img.astro";
+import ArrowLeftIcon from "../icons/ArrowLeftIcon.astro";
+import ArrowRightIcon from "../icons/ArrowRightIcon.astro";
 
 const hero_img = "https://picsum.photos/1920/1080";
 const service_img = "https://picsum.photos/1920/1080?grayscale";
@@ -56,12 +58,12 @@ const background_image = new URL("/media/seo-bg.png", Astro.url);
             <h1 class="services__header" lazy-animation lazy-once>
                 Our Service
                 <div class="services__header__switcher">
-                    <button type="button" id="previous__service">←</button>
-                    <button
-                        type="button"
-                        id="next__service"
-                        data-available="true">→</button
-                    >
+                    <div id="previous__service">
+                        <ArrowLeftIcon class="previous__service"/>
+                    </div>
+                    <div id="next__service" data-available="true">
+                        <ArrowRightIcon />
+                    </div>
                 </div>
             </h1>
             <ServiceReferences id="services__references"/>
@@ -283,19 +285,18 @@ const background_image = new URL("/media/seo-bg.png", Astro.url);
         transform: translateY(50%);
     }
     .services__header__switcher {
+        display: flex;
         text-align: end;
     }
     #previous__service,
     #next__service {
         font-size: var(--fontsize-large);
-        line-height: 3rem;
-        padding: 0.2rem 2rem 0.7rem 2rem;
-        cursor: pointer;
+        border-radius: 2rem;
+        padding: 0 3rem;
         transition: all 0.3s ease-in-out;
     }
     #previous__service[data-available="true"],
     #next__service[data-available="true"] {
-        border-radius: 3rem;
         background-color: var(--color-overlay);
     }
     #services__references {
@@ -442,7 +443,6 @@ const background_image = new URL("/media/seo-bg.png", Astro.url);
         padding: 1em 3em;
         border-radius: var(--radius-normal);
         backdrop-filter: blur(10px);
-        z-index: 2;
     }
     .roadmap__carousel:hover > :global(.img:not(:hover)) {
         filter: blur(10px) brightness(80%);
@@ -480,6 +480,36 @@ const background_image = new URL("/media/seo-bg.png", Astro.url);
             justify-content: space-between;
             text-align: center;
             gap: 1rem;
+            height: 1em;
+        }
+        #previous__service,
+        #next__service {
+            --pd-bar: 1rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 0 var(--pd-bar);
+            font-size: var(--fontsize-large);
+        }
+        #previous__service::before,
+        #next__service::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(100% - 0.3em - (var(--pd-bar) * 2));
+            height: calc(48/512 * 1em + 1%);
+            background-color: currentColor;
+            border-radius: 1em;
+        }
+        #previous__service::before {
+            right: var(--pd-bar);
+        }
+        #next__service::before {
+            left: var(--pd-bar);
+        }
+        #next__service {
+            justify-content: flex-end;
         }
         #previous__service[data-available="true"],
         #next__service[data-available="true"] {

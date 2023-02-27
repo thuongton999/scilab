@@ -2,10 +2,10 @@
 
 /* default is light mode */
 :root {
-    --color-background: #E3FDFD;
-    --color-primary: #CBF1F5;
-    --color-secondary: #A6E3E9;
-    --color-text: #71C9CE;
+    --color-background: #EEEEEE;
+    --color-primary: #00ADB5;
+    --color-secondary: #393E46;
+    --color-text: #222831;
     --color-fade: rgba(0, 0, 0, 0.2);
     --color-overlay: rgba(0, 0, 0, 0.1);
     --color-overlay-dk: rgba(0, 0, 0, 0.7);

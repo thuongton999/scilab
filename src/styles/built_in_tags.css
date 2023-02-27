@@ -12,12 +12,21 @@ img {
     scrollbar-width: none; /* Firefox */
     scroll-behavior: smooth;
 }
-/* *[force-gpu-acceleration] {
+*[force-gpu-acceleration] {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-} */
+}
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: auto;
+    cursor: pointer;
+    box-sizing: content-box;
+}
 a[use-arrow]::after {
     content: " ↗";
 }

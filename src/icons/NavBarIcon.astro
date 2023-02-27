@@ -4,30 +4,28 @@ interface Props {
 }
 const { class: className, ...props } = Astro.props;
 ---
-
-<span class={className} {...props}>
-    <svg
-        x="0px"
-        y="0px"
-        width="100%"
-        height="100%"
-        viewBox="0 0 35.995 30.996"
-    >
-        <path d="M13,3v4H3V3H13 M16,0H0v10h16V0L16,0z"></path>
-        <rect width="15.938" height="3"></rect>
-        <path d="M32.995,3v4h-10V3H32.995 M35.995,0h-16v10h16V0L35.995,0z"
-        ></path>
-        <rect width="15.938" height="3"></rect>
-        <path d="M13,23.996v4H3v-4H13 M16,20.996H0v10h16V20.996L16,20.996z"
-        ></path>
-        <rect width="15.938" height="3"></rect>
-        <polygon points="35.995,14 0,14 0,17 35.995,17 35.995,14 "></polygon>
-        <rect width="15.938" height="3"></rect>
-        <path
-            d="M32.995,23.996v4h-10v-4H32.995 M35.995,20.996h-16v10h16V20.996L35.995,20.996z"
-        ></path>
-    </svg>
-</span>
+<svg
+    x="0px"
+    y="0px"
+    width="100%"
+    height="100%"
+    viewBox="0 0 35.995 30.996"
+    class={className} {...props}
+>
+    <path d="M13,3v4H3V3H13 M16,0H0v10h16V0L16,0z"></path>
+    <rect width="15.938" height="3"></rect>
+    <path d="M32.995,3v4h-10V3H32.995 M35.995,0h-16v10h16V0L35.995,0z"
+    ></path>
+    <rect width="15.938" height="3"></rect>
+    <path d="M13,23.996v4H3v-4H13 M16,20.996H0v10h16V20.996L16,20.996z"
+    ></path>
+    <rect width="15.938" height="3"></rect>
+    <polygon points="35.995,14 0,14 0,17 35.995,17 35.995,14 "></polygon>
+    <rect width="15.938" height="3"></rect>
+    <path
+        d="M32.995,23.996v4h-10v-4H32.995 M35.995,20.996h-16v10h16V20.996L35.995,20.996z"
+    ></path>
+</svg>
 
 <style>
     span {

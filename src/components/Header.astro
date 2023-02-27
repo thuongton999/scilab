@@ -49,9 +49,13 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", Astro.url);
         border-bottom: 2px solid var(--color-overlay);
     }
     .right {
+        --item-gap: clamp(1rem, 5vw, 3rem);
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: var(--item-gap);
+    }
+    #colorscheme_switcher {
+        cursor: pointer;
     }
     .register {
         padding: 0.2rem 1rem;
@@ -63,7 +67,6 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", Astro.url);
         display: none;
     }
     .right__dropdown {
-        --item-gap: clamp(1rem, 5vw, 3rem);
         display: flex;
         align-items: center;
         gap: var(--item-gap);

@@ -221,7 +221,6 @@ const background_image = new URL("/media/seo-bg.png", Astro.url);
         background-position: center;
         background-size: cover;
         background-attachment: fixed;
-        background-color: var(--color-text);
         transform: scale(100%);
         filter: brightness(80%);
         transition: transform 0.3s ease-in-out;
@@ -430,6 +429,7 @@ const background_image = new URL("/media/seo-bg.png", Astro.url);
         aspect-ratio: 1.5;
         border-radius: var(--idx_rm_height);
         margin-right: 1rem;
+        transition: filter 0.3s ease-in;
     }
     .roadmap__carousel > :global(.img)::after {
         counter-increment: roadmap_img;
@@ -443,6 +443,9 @@ const background_image = new URL("/media/seo-bg.png", Astro.url);
         border-radius: var(--radius-normal);
         backdrop-filter: blur(10px);
         z-index: 2;
+    }
+    .roadmap__carousel:hover > :global(.img:not(:hover)) {
+        filter: blur(10px) brightness(80%);
     }
     @media only screen and (max-width: 767px) {
         /* For mobile phones: */

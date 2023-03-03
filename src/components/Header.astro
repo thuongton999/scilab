@@ -1,7 +1,8 @@
 ---
 import NavBarIcon from "../icons/NavBarIcon.astro";
 import ColorSchemeIcon from "../icons/ColorSchemeIcon.astro";
-const vibing_cat_url = new URL("/media/vibing-cat.gif", Astro.url);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const vibing_cat_url = new URL("/media/vibing-cat.gif", canonicalURL);
 ---
 <header style={`--bg-header-img: url(${vibing_cat_url.toString()})`}>
     <a class="left" href="/">SCIENCE Lab</a>

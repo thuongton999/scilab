@@ -37,7 +37,8 @@ const roadmap_imgs = [
         alt: "A picsum image",
     },
 ];
-const background_image = new URL("/media/seo-bg.png", Astro.url);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const background_image = new URL("/media/seo-bg.png", canonicalURL);
 ---
 
 <Layout title="Science Lab" seo_img={background_image.toString()}>

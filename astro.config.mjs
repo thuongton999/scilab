@@ -14,5 +14,7 @@ export default defineConfig({
   output: 'server',
   site: "https://scilab.netlify.app",
   integrations: [robotsTxt(), astroImageTools, react()],
-  adapter: netlify()
+  adapter: netlify({
+    builders: true
+  })
 });

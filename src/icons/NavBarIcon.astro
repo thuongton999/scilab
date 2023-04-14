@@ -44,7 +44,7 @@ const { class: className, ...props } = Astro.props;
         transform-origin: 12% 69%;
         transition: transform 0.3s 0.2s ease;
     }
-    svg:hover > path {
+    svg:hover, svg.hover > path {
         transform: scaleY(100%);
     }
     svg > rect:nth-of-type(1) {

@@ -1,0 +1,172 @@
+---
+import Icon from "../components/Icon";
+import Img from "../components/Img.astro";
+import JumpBackWhenLogged from "../layouts/JumpBackWhenLogged.astro";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const seo_img = new URL("/media/login.svg", canonicalURL);
+---
+
+<JumpBackWhenLogged
+    title="Login"
+    seo_img={seo_img.toString()}
+    seo_content="Login to continue..."
+>
+    <main>
+        <div class="banner">
+            <Img
+                class="abstract_img"
+                src="/media/abstract.jpeg"
+                alt="Science Lab"
+            />
+            <Icon
+                src="/favicon.svg"
+                style={{
+                    filter: "drop-shadow(0 0 1rem var(--color-background)))",
+                }}
+                client:load
+            />
+        </div>
+        <div class="login">
+            <h2 class="login__title">Welcome to ScienceLab</h2>
+            <h3 class="login__subtitle">
+                Sign in to continue accessing our content
+            </h3>
+            <button id="google-signin" class="provider">
+                <Icon src="/icon/logo-google.svg" client:load />
+                <h3>Login with Google</h3>
+            </button>
+        </div>
+    </main>
+</JumpBackWhenLogged>
+
+<script>
+    import { auth, googleProvider } from "../utils/firebase";
+    import {
+        signInWithRedirect,
+        // getRedirectResult,
+        // GoogleAuthProvider,
+        // getAdditionalUserInfo,
+    } from "firebase/auth";
+
+    const googleSignIn = document.getElementById("google-signin");
+    googleSignIn.addEventListener("click", () => {
+        signInWithRedirect(auth, googleProvider);
+    });
+
+    // auth.onAuthStateChanged(() => {
+    //     getRedirectResult(auth)
+    //         .then((result) => {
+    //             // This gives you a Google Access Token. You can use it to access Google APIs.
+    //             const credential =
+    //                 GoogleAuthProvider.credentialFromResult(result);
+    //             const token = credential.accessToken;
+    //         })
+    //         .catch((error) => {
+    //             // Handle Errors here.
+    //             const errorCode = error.code;
+    //             const errorMessage = error.message;
+    //             // The email of the user's account used.
+    //             const email = error.customData?.email;
+    //             // The AuthCredential type that was used.
+    //             const credential =
+    //                 GoogleAuthProvider.credentialFromError(error);
+    //             // ...
+    //         });
+    // });
+</script>
+
+<style>
+    /* Desktop first */
+    main {
+        display: flex;
+        gap: 1rem;
+        width: 100%;
+        height: 100vh;
+    }
+    #homepage-href {
+        display: none;
+    }
+    .banner {
+        flex: 1 0 60%;
+        border-radius: 0 var(--fontsize-large) var(--fontsize-large) 0;
+        border: 3px solid;
+        border-left: 0;
+        border-top: 0;
+        border-bottom: 0;
+        border-image: linear-gradient(
+                transparent var(--fontsize-large),
+                currentColor,
+                transparent calc(100% - var(--fontsize-large))
+            )
+            1 100%;
+        position: relative;
+        font-size: 8em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .abstract_img {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+    }
+    .login {
+        padding: var(--fontsize-normal);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        gap: 2rem;
+    }
+    .login__subtitle {
+        font-family: var(--font-paragraph);
+        font-weight: 400;
+    }
+    .provider {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        border: 2px solid var(--color-text);
+        border-radius: 1rem;
+        padding: 1rem 2rem;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.31s ease-in-out;
+    }
+    .provider:hover {
+        color: var(--color-background);
+        background-color: var(--color-text);
+    }
+    .provider::before {
+        content: "";
+        position: absolute;
+        inset: 0 -5%;
+        transform: skewX(-30deg) translateX(105%);
+        background-color: var(--color-text);
+        transition: inherit;
+        z-index: -1;
+        transition: transform 0.3s ease-in-out;
+    }
+    .provider:hover::before {
+        transform: skewX(-30deg);
+    }
+
+    /* For mobile phones */
+    @media only screen and (max-width: 767px) {
+        main {
+            flex-direction: column;
+        }
+        .banner {
+            flex: 1 0;
+            border-radius: 0 0 var(--fontsize-large) var(--fontsize-large);
+            border-right: 0;
+        }
+        .login {
+            gap: 1rem;
+        }
+    }
+</style>

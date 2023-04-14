@@ -1,0 +1,11 @@
+---
+import Page404 from "../components/404";
+import Layout from "../layouts/Layout.astro";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const background_image = new URL("/media/404.webp", canonicalURL);
+---
+
+<Layout seo_img={background_image.toString()} title="Page Not Found">
+    <Page404 client:load/>
+</Layout>

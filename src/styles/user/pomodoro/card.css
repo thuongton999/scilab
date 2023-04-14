@@ -1,0 +1,66 @@
+@keyframes pop {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+/* Mobile first */
+.card {
+    width: 100%;
+    aspect-ratio: 30/45;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: var(--color-primary);
+    border-radius: var(--fontsize-normal);
+    font-family: var(--font-strong);
+    user-select: none;
+    transition: all 0.1s ease;
+}
+.card[moving] {
+    opacity: var(--opc);
+    transform: translate(var(--mX), var(--mY));
+}
+.card__icon {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card__icon__inner {
+    width: 100%;
+    float: left;
+}
+.card__icon__settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 2em;
+    filter: drop-shadow(0 0 2px currentColor);
+}
+.card__icon__inner > svg {
+    aspect-ratio: 1;
+}
+/* .card__info {
+} */
+.card__info__name {
+    max-width: 99%;
+    height: 1.2em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.card__priority {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 767px) {
+    .card {
+        aspect-ratio: 3/4;
+    }
+}

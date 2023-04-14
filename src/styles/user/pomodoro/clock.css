@@ -1,0 +1,22 @@
+.pomodoro_clock {
+    position: relative;
+    color: transparent;
+}
+.pomodoro_clock::before {
+    color: var(--color-text);
+}
+.pomodoro_clock::after {
+    content: var(--mm)':'var(--ss);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--color-text);
+}
+.pomodoro_clock::before {
+    content: '';
+    position: fixed;
+    inset: 0 calc(100% - var(--prc)) 0 0;
+    background-color: var(--color-error);
+    z-index: -9999;
+    transition: 0.1s ease;
+}

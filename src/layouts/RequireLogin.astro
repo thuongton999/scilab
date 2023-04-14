@@ -1,0 +1,26 @@
+---
+import Layout from "./Layout.astro";
+
+export interface Props {
+    title: string;
+    seo_img: string;
+    seo_content?: string;
+}
+
+const { title, seo_img, seo_content } = Astro.props;
+---
+
+<Layout title={title} seo_img={seo_img} seo_content={seo_content}>
+    <slot />
+</Layout>
+
+<script>
+    import { auth, getCurrentUser } from '../utils/firebase';
+    
+    const jumpToLogin = () => {
+        if (getCurrentUser()) return;
+        window.location.replace(`${window.location.origin}/login`);
+    }
+
+    auth.onAuthStateChanged(jumpToLogin);
+</script>

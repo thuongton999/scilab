@@ -1,0 +1,18 @@
+.modal {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+}
+
+.modal__inner {
+    width: fit-content;
+    height: auto;
+    padding: var(--fontsize-normal) var(--fontsize-large);
+    border-radius: var(--fontsize-normal);
+    background-color: var(--color-primary);
+}

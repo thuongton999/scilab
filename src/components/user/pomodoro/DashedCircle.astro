@@ -1,0 +1,36 @@
+---
+let tl = 2 * Math.PI * 100; // the perimeter of the circle
+let mdiv = tl / 60; // I want 60 short divisions
+let hdiv = tl / 12; // and  12 long divisions
+const {class: className, ...props} = Astro.props;
+---
+
+<svg viewBox="-3 -3 207 207" class={className} {...props}>
+    <circle
+        cx="100"
+        cy="100"
+        r="100"
+        stroke-width="3"
+        stroke-dasharray={`1 ${mdiv - 1}`}>
+    </circle>
+    <circle
+        cx="100"
+        cy="100"
+        r="100"
+        stroke-width="9"
+        stroke-dasharray={`1 ${hdiv - 1}`}>
+    </circle>
+</svg>
+
+<script></script>
+
+<style>
+    svg {
+        width: 100%;
+        aspect-ratio: 1;
+    }
+    circle {
+        stroke: currentColor;
+        fill: transparent;
+    }
+</style>

@@ -1,17 +1,19 @@
 ---
 import NavBarIcon from "../icons/NavBarIcon.astro";
-import ColorSchemeIcon from "../icons/ColorSchemeIcon.astro";
+import Icon from "./Icon";
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const vibing_cat_url = new URL("/media/vibing-cat.gif", canonicalURL);
 ---
+
 <header style={`--bg-header-img: url(${vibing_cat_url.toString()})`}>
-    <a class="left" href="/">SCIENCE Lab</a>
+    <a class="left" href="/">Science Lab</a>
     <nav class="right">
-        <ColorSchemeIcon id="colorscheme_switcher"/>
-        <NavBarIcon class="right__icon"/>
-        <div class="right__dropdown">
-            <a href="/page1">Page1</a>
-            <a href="/page2">Page2</a>
+        <Icon id="colorscheme_switcher" src="icon/ColorSchemeIcon.svg" client:load/>
+        <NavBarIcon class="right__icon" id='dropdown-button'/>
+        <div id='dropdown' class="right__dropdown">
+            <a href="/pomodoro">Pomodoro</a>
+            <a href="/blog">Blog</a>
             <a href="/join" class="register">Join now</a>
         </div>
     </nav>
@@ -26,28 +28,52 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", canonicalURL);
         setColorScheme(isDarkMode ? "light" : "dark");
         isDarkMode = !isDarkMode;
     });
+
+    const dropdownButton = document.getElementById('dropdown-button');
+    const dropdown = document.getElementById('dropdown');
+
+    let isOpen = false;
+    const openDropdown = () => {
+        isOpen = true;
+        dropdown.setAttribute('open', '');
+        dropdownButton.classList.add('hover');
+    }
+    const closeDropdown = () => {
+        isOpen = false;
+        dropdown.removeAttribute('open');
+        dropdownButton.classList.remove('hover');
+    }
+    dropdownButton.addEventListener('click', () => {
+        (!isOpen) ? openDropdown() : closeDropdown();
+    });
+    window.addEventListener('click', (ev) => {
+        const dropdownBound = dropdown.getBoundingClientRect();
+        if (ev.pageX < dropdownBound.left || ev.pageX > dropdownBound.right) return closeDropdown();
+        if (ev.pageY < dropdownBound.top || ev.pageY > dropdownBound.bottom) return closeDropdown();
+    });
 </script>
 
 <style>
     /* For desktop: */
     header {
-        position: fixed;
+        position: absolute;
         top: 0;
-        left: 0; right: 0;
+        left: 0;
+        right: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 1rem var(--padding-lr);
+        color: var(--color-background);
         background-color: var(--color-overlay);
         backdrop-filter: blur(5px);
-        box-shadow: 0 8px 32px 0 var(--color-fade);
+        box-shadow: 0 1rem 2rem 0 var(--color-fade);
         z-index: 99999;
         margin-bottom: 3rem;
         text-transform: uppercase;
         font-size: var(--fontsize-normal);
-        font-family: 'Montserrat', sans-serif;
+        font-family: var(--font-strong);
         font-weight: bold;
-        border-bottom: 2px solid var(--color-overlay);
     }
     .right {
         --item-gap: clamp(1rem, 5vw, 3rem);
@@ -57,8 +83,10 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", canonicalURL);
     }
     .register {
         padding: 0.2rem 1rem;
-        background-color: var(--color-text);
-        color: var(--color-background);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(45deg, var(--color-gradient-bt));
+        background-size: cover;
         border-radius: 1em;
         text-shadow: none;
     }
@@ -81,44 +109,41 @@ const vibing_cat_url = new URL("/media/vibing-cat.gif", canonicalURL);
         }
         .right__dropdown {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: -10%; left: 0; right: 0;
             padding: calc(1.5em + 3rem) var(--padding-lr) 0rem var(--padding-lr);
             flex-direction: column;
             justify-content: center;
             gap: 0;
-            height: 0;
+            opacity: 0;
+            visibility: hidden;
             text-align: end;
             white-space: nowrap;
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-        .right__dropdown > * {
-            padding: 0;
-            font-size: 0;
-            opacity: 0;
-            width: 100%;
-            transition: font-size 0.3s ease;
-        }
-        .right__icon:hover ~ .right__dropdown {
-            padding-bottom: 1rem;
-            height: fit-content;
             background-image: var(--bg-header-img);
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
+            padding-bottom: 1rem;
+            transition: all 0.3s ease;
+            z-index: -1;
         }
-        .right__icon:hover ~ .right__dropdown > * {
+        .right__dropdown > * {
             font-size: 1rem;
-            opacity: 1;
             padding: 0.5rem 0;
+            width: 100%;
         }
-        .register {
-            background-color: unset;
-            color: var(--color-text);
-            border-top: 2px solid currentColor;
-            border-radius: 0;
+        .right__dropdown[open] {
+            display: flex;
+            top: 0;
+            opacity: 1;
+            visibility: visible;
+        }
+        .right__dropdown::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: var(--color-text);
+            opacity: 0.5;
+            z-index: -1;
         }
     }
 </style>

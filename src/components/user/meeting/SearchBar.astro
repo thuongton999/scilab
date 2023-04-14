@@ -1,0 +1,35 @@
+---
+import Icon from "../../Icon";
+const {class: className, ...props} = Astro.props;
+---
+
+<form class={className} {...props}>
+    <Icon name="search-outline" className="searchbar__icon" client:load/>
+    <input type="text" placeholder="Search message..." />
+</form>
+
+<script>
+
+</script>
+
+<style>
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background-color: var(--color-fade);
+        padding: 0 1em;
+        border-radius: 2em;
+    }
+    input[type=text] {
+        width: fit-content;
+    }
+    input[type=text]::placeholder {
+        padding-left: 2px;
+        color: var(--color-fade);
+    }
+    .searchbar__icon {
+        font-size: 1.5em;
+    }
+</style>

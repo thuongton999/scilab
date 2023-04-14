@@ -1,4 +1,5 @@
 :root {
+    --fs: min(1vw, 1vh);
     --padding-lr: clamp(1rem, 5vw, 4rem);
     --padding-bt: clamp(0.2rem, 3vw, 1rem) clamp(0.5rem, 5vw, 2rem);
     --margin-bt-large: clamp(2rem, 10vw, 5rem);
@@ -6,7 +7,8 @@
     --shadow-txt: 0 0 5px;
     --radius-large: clamp(2rem, 15vw, 5rem);
     --radius-normal: clamp(1rem, 10vw, 3rem);
-    --fontsize-larger: clamp(2rem, 8vw, 5rem);
-    --fontsize-large: clamp(1rem, 5vw, 3rem);
-    --fontsize-normal: clamp(0.8rem, 3vw, 1.2rem);
+    --fontsize-larger: clamp(2rem, calc(var(--fs) * 8), 5rem);
+    --fontsize-large: clamp(1rem, calc(var(--fs) * 5), 3rem);
+    --fontsize-normal: clamp(0.8rem, calc(var(--fs) * 3), 1.2rem);
+    --fontsize-small: clamp(0.5rem, calc(var(--fs) * 2), 1rem);
 }

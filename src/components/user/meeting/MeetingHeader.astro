@@ -1,0 +1,43 @@
+---
+import Icon from "../../Icon";
+import TimeCounter from "./TimeCounter.astro";
+
+const { class: className, ...props} = Astro.props;
+---
+
+<header class={className}>
+    <Icon className="logo" src="/favicon.svg" client:load/>
+    <h1>Meeting Name</h1>
+    <TimeCounter />
+</header>
+
+<style>
+    /* Desktop first */
+    header {
+        display: grid;
+        gap: 1rem;
+        align-items: center;
+        grid-template-columns: auto auto 1fr auto auto;
+        font-size: var(--fontsize-normal);
+    }
+    .logo {
+        height: 1.5em;
+        width: unset;
+        aspect-ratio: 1;
+        box-sizing: border-box;
+    }
+    h1 {
+        font-size: 1.5em;
+        position: relative;
+        padding-left: 1rem;
+    }
+    h1::before {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 2px;
+        top: 0; left: 0;
+        background-color: var(--color-fade);
+        border-radius: 1rem;
+    }
+</style>

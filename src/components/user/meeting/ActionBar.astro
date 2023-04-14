@@ -1,0 +1,91 @@
+---
+import Icon from "../../Icon";
+
+const { class: className, ...props } = Astro.props;
+---
+
+<ul class={className}>
+    <button id="copy-link">
+        <span>Share URL</span>
+        <Icon src="/icon/Copy.svg" client:load/>
+    </button>
+    <div class="main">
+        <button id="microphone">
+            <Icon src="/icon/Microphone.svg" className='bt-icon' client:load/>
+        </button>
+        <button id="camera" data-disable>
+            <Icon src="/icon/Camera.svg" className='bt-icon' client:load/>
+        </button>
+        <button id="screen-sharing">
+            <Icon src="/icon/Screen.svg" className='bt-icon' client:load/>
+        </button>
+        <button id='trigger-chat'>
+            <Icon src="/icon/Chat.svg" className='bt-icon' client:load/>
+        </button>
+    </div>
+    <button id="leave-meeting">
+        Leave
+    </button>
+</ul>
+
+<script>
+    import { getActionState, setActionState } from '../../../stores/meeting/actions';
+
+    const initAction = () => {
+        setActionState('microphone', true);
+        setActionState('camera', true);
+        setActionState('screen-sharing', false);
+        setActionState('chat', false);
+    }
+
+    const chatButton = document.getElementById('trigger-chat');
+    chatButton.onclick = (ev) => {
+        ev.preventDefault();
+        setActionState('chat', !(getActionState('chat')));
+    }
+    window.addEventListener('DOMContentLoaded', initAction);
+</script>
+
+<style>
+    ul {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+    .main {
+        display: flex;
+        gap: 1rem;
+    }
+    .bt-icon {
+        aspect-ratio: 1;
+        font-size: var(--fontsize-normal);
+    }
+    button {
+        width: fit-content;
+        background-color: var(--color-fade);
+        padding: 0.5em;
+        cursor: pointer;
+        border-radius: 0.5em;
+        transition: all 0.2s ease;
+    }
+    button[data-disable] {
+        background-color: var(--color-error);
+    }
+    button:hover {
+        transform: scale(1.1);
+    }
+    #copy-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    #copy-link > span {
+        padding-right: 0.5rem;
+        border-right: 2px solid var(--color-text);
+    }
+    #leave-meeting {
+        padding: 0 2rem;
+        background-color: var(--color-error);
+    }
+</style>

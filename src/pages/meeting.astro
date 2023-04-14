@@ -1,0 +1,196 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MeetingHeader from "../components/user/meeting/MeetingHeader.astro";
+import ActionBar from "../components/user/meeting/ActionBar.astro";
+import SearchBar from "../components/user/meeting/SearchBar.astro";
+import UserProfile from "../components/user/UserProfile.astro";
+import UserPeer from "../components/user/meeting/UserPeer.astro";
+import Chat from "../components/user/meeting/Chat.astro";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const background_image = new URL("/media/meeting-bg.png", canonicalURL);
+---
+
+<Layout
+    title="Meeting"
+    seo_img={background_image.toString()}
+    seo_content="Private meeting room"
+>
+    <!-- require login -->
+    <!-- require permission -->
+    <div class="meeting">
+        <MeetingHeader class="meeting__header" />
+        <div class="meeting__utils">
+            <SearchBar />
+            <UserProfile />
+        </div>
+        <div class="meeting__line"></div>
+        <div class="meeting__main" id="main">
+            <div id="main__peers">
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+                <UserPeer />
+            </div>
+            <Chat id="main__chat" />
+        </div>
+        <ActionBar class="meeting__action" />
+    </div>
+</Layout>
+
+<script>
+    import { actions, getActionState } from '../stores/meeting/actions';
+    // import { closestDivisors } from '../utils/algorithm';
+    // if not login, redirect to /login
+    // if not have permission, redirect to /error
+    const meetingMain = document.getElementById('main');
+    const peersContainer = document.getElementById('main__peers');
+    const aspectRatio = 16/9;
+
+    const collapseCells = (cells: number, container: HTMLElement) => {
+        const collapsed =  document.createElement('div');
+        for (let i=0; i < cells; i++) {
+            container.lastElementChild.remove();
+        }
+        collapsed.id = 'peers-collapsed';
+        collapsed.setAttribute('data-collapsed', `${cells}`);
+        container.appendChild(collapsed);
+    }
+
+    const resizePeersGrid = () => {
+        const containerBound = peersContainer.getBoundingClientRect();
+        const containerAspectRatio = containerBound.width / containerBound.height;
+        const cols = Math.round(Math.sqrt(peersContainer.childElementCount));
+        const rows = Math.ceil(cols / aspectRatio);
+        const totalCells = cols * rows;
+        
+        peersContainer.setAttribute('style', `--gw: ${cols};--gh: ${rows};`);
+
+        if (totalCells >= peersContainer.childElementCount) return;
+        collapseCells(peersContainer.childElementCount - totalCells + 1, peersContainer);
+
+        const cellW = containerBound.width / cols;
+        const cellH = cellW / aspectRatio;
+        // console.log(cellW, cellH);
+        // for (let child of peersContainer.children) {
+        //     child.setAttribute('style', `max-height: ${cellH}px;`);
+        // }
+    }
+    const chat = document.getElementById('main__chat');
+
+    const showChat = () => {
+        const chatVar = '--chat-wd';
+        const show = getActionState('chat');
+        if (show) return meetingMain.setAttribute('style', `${chatVar}: 0;`);
+        meetingMain.setAttribute('style', `${chatVar}: ${chat.getBoundingClientRect().width}px`);
+    }
+
+    actions.listen(showChat);
+
+    window.addEventListener('DOMContentLoaded', resizePeersGrid);
+    window.addEventListener('resize', resizePeersGrid)
+</script>
+
+<style>
+    .meeting {
+        gap: 1rem;
+        padding-bottom: 1rem;
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        grid-template-areas:
+            "h u"
+            "l l"
+            "m m"
+            "a a";
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-columns: 1fr auto;
+        font-size: var(--fontsize-small);
+        /* font-family: 'Fira Sans', sans-serif; */
+        /* background-size: 40px 40px;
+        background-image: 
+            linear-gradient(to right, grey 1px, transparent 1px),
+            linear-gradient(to bottom, grey 1px, transparent 1px); */
+    }
+    .meeting__header, .meeting__utils {
+        padding: 1rem 1rem 0 1rem;
+    }
+    .meeting__header {
+        grid-area: h;
+    }
+    .meeting__utils {
+        grid-area: u;
+        display: flex;
+        gap: 1rem;
+    }
+    .meeting__line {
+        grid-area: l;
+        border-bottom: 2px solid var(--color-fade);
+    }
+    .meeting__main {
+        --gap: 1rem;
+        grid-area: m;
+        display: flex;
+        gap: var(--gap);
+        padding: 0 1rem;
+        width: calc(100% + var(--chat-wd) + var(--gap));
+        height: 100%;
+        align-items: center;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+    #main__peers {
+        flex: 1 0;
+        height: 100%;
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: repeat(var(--gw), minmax(0, 1fr));
+        grid-template-rows: repeat(var(--gh), minmax(0, 1fr));
+        gap: 1rem;
+        overflow: hidden;
+    }
+    #main__chat {
+    }
+    .meeting__action {
+        grid-area: a;
+        padding: 0 1rem;
+    }
+</style>
+
+<style is:global>
+    #peers-collapsed {
+        position: relative;
+        background-color: var(--color-fade);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--fontsize-normal);
+    }
+    #peers-collapsed::after {
+        content: attr(data-collapsed) " others ...";
+        padding: 1rem;
+    }
+    #main__peers > * {
+        min-width: 100%;
+        /* aspect-ratio: 16/9; */
+    }
+
+</style>

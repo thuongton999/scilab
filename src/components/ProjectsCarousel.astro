@@ -1,6 +1,6 @@
 ---
 import Img from "./Img.astro";
-import ArrowRightIcon from "../icons/ArrowRightIcon.astro";
+import Icon from "./Icon";
 const { class: className, ...props } = Astro.props;
 
 const carousel_imgs = [
@@ -87,7 +87,7 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
             })}
         </div>
     ))}
-    <ArrowRightIcon type="button" id="ps_next_img"/>
+    <Icon id="ps_next_img" src="/icon/ArrowRightIcon.svg" client:load/>
 </section>
 
 <script>
@@ -114,20 +114,6 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
 <style>
     section {
         position: relative;
-    }
-    #ps_next_img {
-        position: absolute;
-        top: 50%;
-        right: 0%;
-        transform: translate(50%, -50%);
-        background-color: var(--color-overlay);
-        backdrop-filter: blur(10px);
-        font-size: var(--fontsize-normal);
-        line-height: 70%;
-        padding: 0.5rem 1.5rem;
-        border-radius: var(--radius-normal);
-        overflow: hidden;
-        cursor: pointer;
     }
     .img_wrapper {
         flex: 1 0;
@@ -193,8 +179,22 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
         .carousel__img2n {
             flex-basis: 30%;
         }
-        button#ps_next_img {
-            padding: 0.4rem 1rem;
-        }
+    }
+</style>
+
+<style is:global>
+    #ps_next_img {
+        position: absolute;
+        top: 50%;
+        right: 0%;
+        transform: translate(50%, -50%);
+        background-color: var(--color-overlay);
+        backdrop-filter: blur(10px);
+        font-size: var(--fontsize-normal);
+        line-height: 70%;
+        padding: clamp(0.4rem, 1vw, 0.5rem) clamp(1rem, 2vw, 1.5rem);
+        border-radius: var(--radius-normal);
+        overflow: hidden;
+        cursor: pointer;
     }
 </style>

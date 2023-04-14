@@ -1,0 +1,98 @@
+---
+import Icon from "../../Icon";
+const { class: className, ...props } = Astro.props;
+---
+
+<div class={`chat ${className||''}`} {...props}>
+    <div class="chat__log">
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+        <span>hi</span>
+    </div>
+    <form>
+        <input type="text" placeholder="Write a message..." />
+        <button id='send-message'>
+            <Icon name="paper-plane-outline" client:load/>
+        </button>
+    </form>
+</div>
+
+<script>
+
+</script>
+
+<style>
+    .chat {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        padding: 1rem;
+        border-radius: 1em;
+        height: 100%;
+        background-color: var(--color-fade);
+    }
+    .chat__log {
+        flex: 1 0;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+    }
+    form {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0.5rem 0.5rem 1rem;
+        border-radius: 1em;
+        background-color: var(--color-background);
+    }
+    input::placeholder {
+        padding-left: 2px;
+        color: var(--color-fade)
+    }
+    #send-message {
+        background-color: var(--color-primary);
+        padding: 1em;
+        border-radius: 0.5em;
+        aspect-ratio: 1;
+    }
+</style>

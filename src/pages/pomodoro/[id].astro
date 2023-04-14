@@ -1,0 +1,136 @@
+---
+import DashedCircle from "../../components/user/pomodoro/DashedCircle.astro";
+import PomodoroLayout from "../../layouts/PomodoroLayout.astro";
+import Timer from "../../components/user/pomodoro/Timer";
+import PomodoroCycle from "../../components/user/pomodoro/PomodoroCycle";
+import PomodoroHeader from "../../components/user/pomodoro/PomodoroHeader.astro";
+
+const { id: taskId } = Astro.params;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const vibing_cat_url = new URL("/media/vibing-cat.gif", canonicalURL);
+---
+
+<PomodoroLayout>
+    <div class="noise"></div>
+    <PomodoroHeader />
+    <main>
+        <Timer id={taskId} class="timer" client:only="react">
+            <PomodoroCycle class='timer__clock' client:only='react'/>
+            <div class="hehe" style={`--meow:url(${vibing_cat_url})`}></div>
+        </Timer>
+        <DashedCircle class="timer__ticker" id="ticker" style="--ss: 0deg;" />
+    </main>
+</PomodoroLayout>
+
+<script>
+    import { ss } from "../../stores/pomodoro/time";
+    const ticker = document.getElementById("ticker");
+
+    const shortDivs = 60;
+    ss.listen((secondEllapsed) => {
+        ticker.setAttribute(
+            "style",
+            `--ss: ${secondEllapsed * (360 / shortDivs)}deg;`
+        );
+    });
+</script>
+
+<style>
+    body {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: stretch;
+        gap: var(--fontsize-large);
+        padding: 2rem;
+    }
+    header {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        align-items: center;
+        font-size: var(--fontsize-large);
+    }
+    main {
+        flex: 1 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .timer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        gap: var(--fontsize-larger);
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+    }
+    .timer__ticker {
+        position: fixed;
+        width: 150%;
+        top: 75%;
+        left: 50%;
+        transform-origin: center;
+        transform: translateX(-50%) rotate(var(--ss));
+        transition: all 0.1s ease;
+    }
+    .timer__clock {
+        flex: 1 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: var(--fontsize-larger);
+        justify-content: center;
+        flex-direction: column;
+        font-family: var(--font-strong);
+        font-size: min(30vw, 15vh);
+    }
+    .fd {
+        --fd: 1rem;
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent var(--fd),
+            black,
+            transparent calc(100% - var(--fd))
+        );
+        mask-image: linear-gradient(
+            to right,
+            transparent var(--fd),
+            black,
+            transparent calc(100% - var(--fd))
+        );
+    }
+    .hehe {
+        background-image: var(--meow);
+        background-position: center;
+        background-size: cover;
+        background-blend-mode: overlay;
+        width: 5rem;
+        aspect-ratio: 16/9;
+        opacity: 0;
+        z-index: 1;
+        transition: all 0.3s ease-in-out;
+    }
+    .hehe:hover {
+        opacity: 1;
+    }
+</style>
+
+<style is:global>
+    :root {
+        --color-primary: #3a98b9;
+    }
+    :root[theme="dark"] {
+        --color-background: #3a98b9;
+        --color-primary: #fffdde;
+        --color-secondary: #413f42;
+        --color-text: #ecf2ff;
+    }
+</style>

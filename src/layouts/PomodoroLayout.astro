@@ -1,0 +1,59 @@
+---
+import RequireLogin from "./RequireLogin.astro";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const seo_img = new URL("/media/pomodoro.jpg", canonicalURL);
+---
+
+<RequireLogin
+    title="Pomodoro"
+    seo_img={seo_img.toString()}
+    seo_content="A pomodoro app for Science Lab members only"
+>
+    <slot />
+</RequireLogin>
+
+<script>
+    import { auth, onDocumentUpdate } from "../utils/firebase";
+    import { createUser, updateTasksCache } from "../utils/user/pomodoro";
+    import { priorityById } from "../stores/pomodoro/priorities";
+
+    import { resetTask } from "../stores/pomodoro/tasks";
+    import { userConverter } from "../components/user/User";
+    import { DocumentSnapshot } from "firebase/firestore";
+
+    let unsubs = [];
+    auth.onAuthStateChanged(async (user) => {
+        if (!user) return (unsubs.length && unsubs.forEach(unsub => unsub()));
+        createUser(user.uid);
+        resetTask();
+
+        unsubs.push(onDocumentUpdate(
+            "users",
+            user.uid,
+            (doc: DocumentSnapshot) => {
+                const received = doc.data()?.tasks;
+                priorityById.set(received);
+                updateTasksCache(user.uid);
+            },
+            userConverter
+        ));
+    });
+</script>
+
+<style>
+    /* default is light mode */
+    :root {
+        --color-background: #ecf2ff;
+        --color-primary: #B0DAFF;
+        --color-secondary: #1b2430;
+        --color-text: #393e46;
+    }
+
+    :root[theme="dark"] {
+        --color-background: #393e46;
+        --color-primary: #3a98b9;
+        --color-secondary: #413f42;
+        --color-text: #ecf2ff;
+    }
+</style>

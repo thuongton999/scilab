@@ -1,0 +1,33 @@
+---
+const { class: className, ...props } = Astro.props;
+---
+
+<div class={className} {...props}>
+    <span id="time-counter">00:00:00</span>
+</div>
+
+<script>
+    const counter = document.getElementById('time-counter');
+    const startTime = Date.now();
+    setInterval(() => {
+        const timeElapsed = Date.now() - startTime;
+        const seconds = Math.round(timeElapsed / 1000);
+        const ss = (seconds % 60).toString().padStart(2, '0');
+        const mm = (Math.floor(seconds / 60)).toString().padStart(2, '0');
+        const hh = (Math.floor(seconds / 3600)).toString().padStart(2, '0');
+        counter.textContent = `${hh}:${mm}:${ss}`;
+    }, 1000);
+</script>
+
+<style>
+    span {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: normal;
+        width: fit-content;
+        background-color: var(--color-fade);
+        line-height: var(--h);
+        padding: 0.25em 0.5em;
+        border-radius: 1em;
+    }
+</style>

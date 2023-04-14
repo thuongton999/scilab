@@ -1,0 +1,18 @@
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: auto;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+.icon--loaded {
+
+}
+.icon--loading {
+
+}
+.icon--error {
+
+}

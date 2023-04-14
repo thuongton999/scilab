@@ -1,0 +1,122 @@
+---
+const { class: className, levels, ...props } = Astro.props;
+
+const items = Array.from({length: levels}, (item, index) => index + 1); 
+---
+
+<ul class={`priorities ${className || ""}`} {...props} hide-scrollbar>
+    {items.map((_, idx) => {
+        return <button class="priorities__index" style={`--idx:${idx+1}`}>{idx+1}</button>
+    })}
+    <button id="task__adder">Add</button>
+</ul>
+
+<script>
+    import { createTask, linkTaskToUser, setTaskPriority } from "../../../utils/user/pomodoro";
+    import { getCurrentUser } from "../../../utils/firebase";
+
+    import { getCurrentTask } from "../../../stores/pomodoro/tasks";
+
+    const taskAdder = document.getElementById("task__adder");
+
+    taskAdder.addEventListener("click", () => {
+        const userId = getCurrentUser()?.uid;
+        if (!userId) return;
+        createTask(userId).then((docRef) => {
+            linkTaskToUser(docRef.id, userId);
+        });
+    });
+
+    const prioritySetters =
+        document.getElementsByClassName("priorities__index");
+
+    for (let i=0; i<prioritySetters.length; i++) {
+        const prioritySetter = prioritySetters[i];
+        prioritySetter.addEventListener("click", () => {
+            const currentTaskId = getCurrentTask()?.id;
+            const userId = getCurrentUser()?.uid;
+            if (!currentTaskId || !userId) return;
+            setTaskPriority(currentTaskId, userId, i+1);
+        });
+    }
+</script>
+
+<style>
+    /* Mobile first */
+    .priorities {
+        position: relative;
+        width: 100vw;
+        padding: inherit;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: auto;
+        font-family: var(--font-strong);
+        font-weight: bold;
+        user-select: none;
+    }
+    .priorities::before,
+    .priorities::after {
+        content: "";
+        position: fixed;
+        inset: -1px;
+        pointer-events: none;
+        --blur-d: 2.5rem;
+        --blur-w: 2rem;
+        --blur-s: -1rem;
+        z-index: 1;
+    }
+    .priorities::before {
+        box-shadow: inset var(--blur-d) 0 var(--blur-w) var(--blur-s)
+            var(--color-background);
+    }
+    .priorities::after {
+        box-shadow: inset calc(-1 * var(--blur-d)) 0 var(--blur-w) var(--blur-s)
+            var(--color-background);
+    }
+    .priorities__index {
+        padding: 1rem;
+        border-radius: 50%;
+        height: 100%;
+        aspect-ratio: 1;
+        cursor: pointer;
+        color: var(--color-secondary);
+        background-color: var(--color-primary);
+        filter: saturate(calc(var(--idx))) hue-rotate(calc(var(--idx) * -30deg));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+    }
+    .priorities__index:hover {
+        box-shadow: inset 0 0 0 2px var(--color-text),
+            0 0 3rem -1rem var(--color-text);
+    }
+    #task__adder {
+        position: relative;
+        cursor: pointer;
+        aspect-ratio: 1;
+        padding: 1rem;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 2px var(--color-text);
+        color: var(--color-text);
+        transition: all 0.2s ease;
+    }
+    #task__adder:hover {
+        color: var(--color-background);
+        background-color: var(--color-text);
+    }
+    #task__adder::after {
+        content: "+";
+        display: none;
+        position: absolute;
+        background-color: inherit;
+        inset: 1px;
+        font-size: var(--fontsize-larger);
+    }
+    #task__adder:active::after {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: inherit;
+    }
+</style>

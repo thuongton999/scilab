@@ -1,0 +1,94 @@
+---
+import UserName from "../../components/user/UserName";
+import CardList from "../../components/user/pomodoro/CardList";
+import PomodoroHeader from "../../components/user/pomodoro/PomodoroHeader.astro";
+import Priorities from "../../components/user/pomodoro/Priorities.astro";
+import PomodoroLayout from "../../layouts/PomodoroLayout.astro";
+---
+
+<PomodoroLayout>
+    <div class="layout">
+        <PomodoroHeader />
+
+        <main>
+            <h1>Welcome, <UserName client:only="react"/></h1>
+            <CardList client:only="react" />
+        </main>
+
+        <Priorities id="footer" class="footer" levels={6} />
+    </div>
+</PomodoroLayout>
+
+<script>
+    const footer = document.getElementById("footer");
+
+    const isOverflown = ({
+        clientWidth,
+        clientHeight,
+        scrollWidth,
+        scrollHeight,
+    }) => {
+        return scrollHeight > clientHeight || scrollWidth > clientWidth;
+    };
+    const justifyFooter = () => {
+        if (!isOverflown(footer)) {
+            footer.removeAttribute("overflown");
+            return;
+        }
+        footer.setAttribute("overflown", "");
+    };
+
+    window.addEventListener("DOMContentLoaded", justifyFooter);
+    window.addEventListener("resize", justifyFooter);
+</script>
+
+<style>
+    .layout {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: 1rem clamp(1rem, 10%, 3rem);
+    }
+    .layout::before {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        inset: 0;
+        background: url(/media/noise.webp) repeat,
+            linear-gradient(80deg, var(--color-gradient-bt));
+        background-blend-mode: overlay;
+        -webkit-mask-image: radial-gradient(
+            rgba(0, 0, 0, 0.7),
+            transparent 80%
+        );
+        mask-image: radial-gradient(rgba(0, 0, 0, 0.7), transparent 80%);
+    }
+    main {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--fontsize-larger);
+        overflow: visible;
+        align-items: center;
+    }
+    .footer {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+    }
+    .footer[overflown] {
+        justify-content: flex-start;
+    }
+    /* landscape */
+    @media screen and (min-aspect-ratio: 101/100) {
+        main {
+            flex-direction: row;
+        }
+    }
+</style>

@@ -1,0 +1,113 @@
+---
+import Icon from "../Icon";
+
+const { class: className, ...props } = Astro.props;
+---
+
+<button class={`user_profile ${className || ""}`} {...props}>
+    <div id="avatar"></div>
+    <ul id="settings">
+        <li id="colorscheme_switcher">
+            Theme
+            <Icon src="/icon/ColorSchemeIcon.svg" client:load />
+        </li>
+        <li id="logout">
+            Logout
+            <Icon src="/icon/Logout.svg" client:load />
+        </li>
+    </ul>
+</button>
+
+<script>
+    import { getColorScheme, setColorScheme } from "../../utils/color-scheme";
+    import { auth } from "../../utils/firebase";
+    import { signOut } from "firebase/auth";
+
+    let isDarkMode = getColorScheme() === "dark";
+
+    auth.onAuthStateChanged((user) => {
+        if (!user) return;
+        const colorSchemeSwitcher = document.getElementById(
+            "colorscheme_switcher"
+        );
+        const logoutButton = document.getElementById("logout");
+        const avatar = document.getElementById("avatar");
+
+        colorSchemeSwitcher.addEventListener("click", () => {
+            setColorScheme(isDarkMode ? "light" : "dark");
+            isDarkMode = !isDarkMode;
+        });
+
+        avatar.setAttribute("style", `--avatar-img: url(${user.photoURL})`);
+        
+        logoutButton.addEventListener("click", () => {
+            signOut(auth)
+                .then(() => {
+                    // Sign-out successful.
+                })
+                .catch((error) => {
+                    // An error happened.
+                });
+        });
+    });
+</script>
+
+<style>
+    .user_profile {
+        position: relative;
+        user-select: none;
+        cursor: pointer;
+    }
+    #avatar {
+        width: 2em;
+        aspect-ratio: 1;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
+        border: 2px solid currentColor;
+        background-color: currentColor;
+        background-image: var(--avatar-img);
+        background-size: cover;
+        background-position: center;
+        overflow: hidden;
+    }
+    #settings {
+        position: absolute;
+        width: fit-content;
+        height: auto;
+        top: 110%;
+        right: 0;
+        transform: translateY(1rem);
+        border-radius: 1rem;
+        color: var(--color-background);
+        /* border: 2px solid currentColor; */
+        background-color: var(--color-text);
+        font-family: var(--font-strong);
+        font-weight: bold;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+    #settings > li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        gap: var(--fontsize-normal);
+        border-bottom: 2px solid currentColor;
+    }
+    #settings > li:last-child {
+        border-bottom: 0;
+    }
+    .user_profile:focus-within > #settings {
+        display: flex;
+        opacity: 1;
+        visibility: visible;
+        top: 100%;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;
+        box-shadow: 0 0 1rem var(--color-text);
+    }
+</style>

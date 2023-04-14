@@ -1,0 +1,30 @@
+.cardlist {
+    position: relative;
+    overflow: visible;
+    width: clamp(10em, min(90%, 40vh), 30rem);
+}
+.cardlist > * {
+    position: absolute;
+    inset: 0;
+    display: none !important;
+    pointer-events: none;
+}
+.cardlist > .card--active {
+    pointer-events: all;
+    display: flex !important;
+}
+.cardlist > .card__idx0 {
+    position: relative;
+    z-index: 0;
+    filter: drop-shadow(0 0 1rem var(--color-background));
+}
+.cardlist > .card__idx1 {
+    z-index: -1;
+    filter: hue-rotate(-20deg) drop-shadow(0 0 1rem var(--color-background));
+    transform: rotate(-10deg);
+}
+.cardlist > .card__idx2 {
+    z-index: -2;
+    filter: hue-rotate(-40deg) drop-shadow(0 0 1rem var(--color-background));
+    transform: rotate(-20deg);
+}

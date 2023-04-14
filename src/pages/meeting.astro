@@ -1,11 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import MeetingHeader from "../components/user/meeting/MeetingHeader.astro";
-import ActionBar from "../components/user/meeting/ActionBar.astro";
-import SearchBar from "../components/user/meeting/SearchBar.astro";
-import UserProfile from "../components/user/UserProfile.astro";
-import UserPeer from "../components/user/meeting/UserPeer.astro";
-import Chat from "../components/user/meeting/Chat.astro";
+// import MeetingHeader from "../components/user/meeting/MeetingHeader.astro";
+// import ActionBar from "../components/user/meeting/ActionBar.astro";
+// import SearchBar from "../components/user/meeting/SearchBar.astro";
+// import UserProfile from "../components/user/UserProfile.astro";
+// import UserPeer from "../components/user/meeting/UserPeer.astro";
+// import Chat from "../components/user/meeting/Chat.astro";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const background_image = new URL("/media/meeting-bg.png", canonicalURL);
@@ -18,7 +18,7 @@ const background_image = new URL("/media/meeting-bg.png", canonicalURL);
 >
     <!-- require login -->
     <!-- require permission -->
-    <div class="meeting">
+    <!-- <div class="meeting">
         <MeetingHeader class="meeting__header" />
         <div class="meeting__utils">
             <SearchBar />
@@ -52,10 +52,10 @@ const background_image = new URL("/media/meeting-bg.png", canonicalURL);
             <Chat id="main__chat" />
         </div>
         <ActionBar class="meeting__action" />
-    </div>
+    </div> -->
 </Layout>
 
-<script>
+<!-- <script>
     import { actions, getActionState } from '../stores/meeting/actions';
     // import { closestDivisors } from '../utils/algorithm';
     // if not login, redirect to /login
@@ -106,10 +106,10 @@ const background_image = new URL("/media/meeting-bg.png", canonicalURL);
 
     window.addEventListener('DOMContentLoaded', resizePeersGrid);
     window.addEventListener('resize', resizePeersGrid)
-</script>
+</script> -->
 
 <style>
-    .meeting {
+    /* .meeting {
         gap: 1rem;
         padding-bottom: 1rem;
         width: 100%;
@@ -123,11 +123,6 @@ const background_image = new URL("/media/meeting-bg.png", canonicalURL);
         grid-template-rows: auto auto 1fr auto;
         grid-template-columns: 1fr auto;
         font-size: var(--fontsize-small);
-        /* font-family: 'Fira Sans', sans-serif; */
-        /* background-size: 40px 40px;
-        background-image: 
-            linear-gradient(to right, grey 1px, transparent 1px),
-            linear-gradient(to bottom, grey 1px, transparent 1px); */
     }
     .meeting__header, .meeting__utils {
         padding: 1rem 1rem 0 1rem;
@@ -171,10 +166,10 @@ const background_image = new URL("/media/meeting-bg.png", canonicalURL);
     .meeting__action {
         grid-area: a;
         padding: 0 1rem;
-    }
+    } */
 </style>
 
-<style is:global>
+<!-- <style is:global>
     #peers-collapsed {
         position: relative;
         background-color: var(--color-fade);
@@ -193,4 +188,4 @@ const background_image = new URL("/media/meeting-bg.png", canonicalURL);
         /* aspect-ratio: 16/9; */
     }
 
-</style>
+</style> -->

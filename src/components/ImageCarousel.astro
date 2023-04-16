@@ -1,17 +1,22 @@
 ---
 export interface Props {
-    imgs: {src: string, alt: string}[]
-    class?: string
-    props?: any
+    imgs: { src: string; alt: string }[];
+    class?: string;
+    props?: any;
 }
-import Img from './Img.astro';
+import Img from "./Img.astro";
 const { class: className, imgs, ...props } = Astro.props;
 ---
 
 <section class={className} id="img_carousel" hide-scrollbar {...props}>
     {
         imgs.map((img: { src: string; alt: string }) => (
-            <Img src={img.src} alt={img.alt} />
+            <Img
+                src={img.src}
+                alt={img.alt}
+                width={1080}
+                aspectRatio="4:3"
+            />
         ))
     }
 </section>
@@ -26,8 +31,8 @@ const { class: className, imgs, ...props } = Astro.props;
                 let carousel_width = img_carousel.offsetWidth;
                 img_carousel.scrollTo(mouseRelativeX * carousel_width, 0);
             });
-        } 
-    }
+        }
+    };
     window.addEventListener("DOMContentLoaded", init);
     window.addEventListener("resize", init);
 </script>

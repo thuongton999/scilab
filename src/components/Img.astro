@@ -1,10 +1,19 @@
 ---
-import { Img } from "astro-imagetools/components";
-const { class: className, id, style, ...props } = Astro.props; 
+import { Image } from "@astrojs/image/components";
+
+const { class: className, id, style, src, alt, ...props } = Astro.props;
 ---
 
 <div class={`img ${className || ""}`} id={id} style={style}>
-    <Img {...props} />
+    <Image
+        src={src}
+        alt={alt}
+        format={"webp"}
+        fit={"cover"}
+        position={"center"}
+        loading={"lazy"}
+        {...props}
+    />
 </div>
 
 <style is:global>

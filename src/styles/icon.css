@@ -8,7 +8,7 @@
     box-sizing: content-box;
 }
 .icon--loaded {
-
+    user-select: none;
 }
 .icon--loading {
 

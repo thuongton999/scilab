@@ -68,26 +68,44 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
     group[groupIndex].push(item);
     return group;
 }, []);
-
 ---
+
 <section class={`${className} carousel`} {...props} lazy-animation>
-    {imgGroups.map((group, glb_idx) => (
-        <div class="carousel__group" data-show={!glb_idx} data-show-next={glb_idx === 1}>
-            {group.map((img: { src: string; alt: string }, item_idx: number) => {
-                const index = glb_idx * displayPerRow + item_idx + 1;
-                // for styling img
-                const clsName = index % 2 === 0 ? 
-                    (index % 4 === 0 ? "carousel__img4n" : "carousel__img2n") : 
-                    (index % 3 === 0 ? "carousel__img3n" : "carousel__img1n");
-                return (
-                    <div class={`${clsName} img_wrapper`}>
-                        <Img src={img.src} alt={img.alt} />
-                    </div>
-                );
-            })}
-        </div>
-    ))}
-    <Icon id="ps_next_img" src="/icon/ArrowRightIcon.svg" client:load/>
+    {
+        imgGroups.map((group, glb_idx) => (
+            <div
+                class="carousel__group"
+                data-show={!glb_idx}
+                data-show-next={glb_idx === 1}
+            >
+                {group.map(
+                    (img: { src: string; alt: string }, item_idx: number) => {
+                        const index = glb_idx * displayPerRow + item_idx + 1;
+                        // for styling img
+                        const clsName =
+                            index % 2 === 0
+                                ? index % 4 === 0
+                                    ? "carousel__img4n"
+                                    : "carousel__img2n"
+                                : index % 3 === 0
+                                ? "carousel__img3n"
+                                : "carousel__img1n";
+                        return (
+                            <div class={`${clsName} img_wrapper`}>
+                                <Img
+                                    src={img.src}
+                                    alt={img.alt}
+                                    width={1080}
+                                    aspectRatio="4:3"
+                                />
+                            </div>
+                        );
+                    }
+                )}
+            </div>
+        ))
+    }
+    <Icon id="ps_next_img" src="/icon/ArrowRightIcon.svg" client:load />
 </section>
 
 <script>
@@ -95,10 +113,9 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
     const nextBt = document.getElementById("ps_next_img");
     let currentIdx = 0;
     let lastIdx = null;
-    
+
     const nextGroup = () => {
-        if (lastIdx !== null)
-            groups[lastIdx].removeAttribute("data-show-prev");
+        if (lastIdx !== null) groups[lastIdx].removeAttribute("data-show-prev");
         lastIdx = currentIdx;
         currentIdx = (currentIdx + 1) % groups.length;
         const nextIdx = (currentIdx + 1) % groups.length;
@@ -107,7 +124,7 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
         groups[lastIdx].setAttribute("data-show-prev", "");
         groups[currentIdx].setAttribute("data-show", "");
         groups[nextIdx].setAttribute("data-show-next", "");
-    }
+    };
     nextBt.addEventListener("click", nextGroup);
 </script>
 
@@ -143,7 +160,7 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
         transition: all 1s ease-in-out;
     }
     .carousel__group[data-show-prev],
-    .carousel__group[data-show], 
+    .carousel__group[data-show],
     .carousel__group[data-show-next] {
         display: flex;
         gap: var(--ps-img-gap);
@@ -155,7 +172,7 @@ const imgGroups = carousel_imgs.reduce((group, item, index) => {
     .carousel__group[data-show] {
         order: 2;
         transform: translateX(0%);
-    } 
+    }
     .carousel__group[data-show-next] {
         order: 3;
         transform: translateX(calc(100% + var(--padding-lr)));

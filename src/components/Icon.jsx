@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../styles/icon.css";
 
 function Icon(props) {
-    const { className, src, name, ...childProps} = props;
+    const { className, class: astroClassName, src, name, ...childProps} = props;
     if (name) {
         return (
             <div className={`icon icon--loaded ${className||''}`} {...childProps}>
@@ -26,7 +26,7 @@ function Icon(props) {
         <div
             className={`icon icon--${isLoaded ? "loaded" : "loading"} ${
                 isErrored ? "icon--error" : ""
-            } ${className || ""}`}
+            } ${className || ""} ${astroClassName||''}`}
             dangerouslySetInnerHTML={{ __html: svg }}
             {...childProps}
         />

@@ -67,16 +67,21 @@ const background_image = new URL("/media/seo-bg.png", canonicalURL);
                 Our Service
                 <div class="services__header__switcher">
                     <div id="previous__service">
-                        <Icon src="/icon/ArrowLeftIcon.svg" client:load/>
+                        <Icon src="/icon/ArrowLeftIcon.svg" client:load />
                     </div>
                     <div id="next__service" data-available="true">
-                        <Icon src="/icon/ArrowRightIcon.svg" client:load/>
+                        <Icon src="/icon/ArrowRightIcon.svg" client:load />
                     </div>
                 </div>
             </h1>
             <ServiceReferences id="services__references" />
             <div class="services__image">
-                <Img src={service_img} alt="service" />
+                <Img
+                    src={service_img}
+                    alt="service"
+                    width={1080}
+                    aspectRatio="16:9"
+                />
             </div>
             <h2>
                 Ad veniam ullamco fugiat reprehenderit incididunt elit deserunt
@@ -460,6 +465,7 @@ const background_image = new URL("/media/seo-bg.png", canonicalURL);
         padding: 1em 3em;
         border-radius: var(--radius-normal);
         backdrop-filter: blur(10px);
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
     .roadmap__carousel:hover > :global(.img:not(:hover)) {
         filter: blur(10px) brightness(80%);

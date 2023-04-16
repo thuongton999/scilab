@@ -15,15 +15,14 @@ const seo_img = new URL("/media/login.svg", canonicalURL);
     <main>
         <div class="banner">
             <Img
+                width={1920} 
+                aspectRatio="1:1"
                 class="abstract_img"
                 src="/media/abstract.jpeg"
                 alt="Science Lab"
             />
             <Icon
                 src="/favicon.svg"
-                style={{
-                    filter: "drop-shadow(0 0 1rem var(--color-background)))",
-                }}
                 client:load
             />
         </div>
@@ -111,6 +110,7 @@ const seo_img = new URL("/media/login.svg", canonicalURL);
         position: absolute;
         inset: 0;
         z-index: -1;
+        filter: brightness(0.9);
     }
     .login {
         padding: var(--fontsize-normal);

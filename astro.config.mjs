@@ -14,7 +14,7 @@ import image from "@astrojs/image";
 export default defineConfig({
   output: 'server',
   cacheDir: "/.cache",
-  site: "https://scilab.netlify.app",
+  site: "https://scilab.vercel.app/",
   integrations: [robotsTxt(), react(), image({
     serviceEntryPoint: '@astrojs/image/sharp',
     cacheDir: "./.cache/image"

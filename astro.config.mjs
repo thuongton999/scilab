@@ -1,11 +1,11 @@
 import { defineConfig } from 'astro/config';
 import robotsTxt from "astro-robots-txt";
-import netlify from '@astrojs/netlify/functions';
+// import netlify from '@astrojs/netlify/functions';
 
 import react from "@astrojs/react";
 
 // https://astro.build/config
-// import vercel from "@astrojs/vercel/serverless";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 import image from "@astrojs/image";
@@ -19,5 +19,5 @@ export default defineConfig({
     serviceEntryPoint: '@astrojs/image/sharp',
     cacheDir: "./.cache/image"
   })],
-  adapter: netlify()
+  adapter: vercel()
 });
